@@ -4,7 +4,7 @@ using namespace std;
 class Piece
 {
     char player;
-    int x_coordinate, y_coordinate;
+    int column, row;
     bool isKing;
 
     void init_possible_coordinates(int arr[][2], int rows, int cols = 2)
@@ -16,27 +16,27 @@ class Piece
 
     public:
         Piece(){}
-        Piece(char player, int x_coordinate, int y_coordinate, bool isKing = false)
+        Piece(char player, int row, int column, bool isKing = false)
         {
             this -> player = player;
-            this -> x_coordinate = x_coordinate;
-            this -> y_coordinate = y_coordinate;
+            this -> column = column;
+            this -> row = row;
             this -> isKing = isKing;
         }
 
         void getVals()
         {
             cout << "player: " << player << endl;
-            cout << "x_coordinate: " << x_coordinate << endl;
-            cout << "y_coordinate: " << y_coordinate << endl;
+            cout << "column: " << column << endl;
+            cout << "row: " << row << endl;
             cout << "isKing: " << isKing << endl;
         }
 
         int *posibleMoves(int board[8][8], int x, int y)
         {   
 
-            int forward_diagonal_right[] = {y_coordinate + 1, x_coordinate + 1};
-            int forward_diagonal_left[] = {y_coordinate + 1, x_coordinate - 1};
+            int forward_diagonal_right[] = {row + 1, column + 1};
+            int forward_diagonal_left[] = {row + 1, column - 1};
             if(!isKing)
             {   
                 static int possible_coordinates[2][2];
@@ -78,8 +78,8 @@ class Piece
 /*
             else
             {
-                int possible_coordinates[4][2] = {{x_coordinate + 1, y_coordinate + 1},
-                 {x_coordinate - 1, y_coordinate + 1}, {x_coordinate, y_coordinate + 1}, {x_coordinate, y_coordinate - 1}};
+                int possible_coordinates[4][2] = {{column + 1, row + 1},
+                 {column - 1, row + 1}, {column, row + 1}, {column, row - 1}};
             } */
 
             
@@ -215,7 +215,7 @@ void player_init(Piece pieces[], Position board[8][8], char player)
         {
             if(board[row][col].getIsDark())
             {
-                pieces[piece_index] = Piece(player, col, row);
+                pieces[piece_index] = Piece(player, row, col);
                 board[row][col].setContainingValue(player);
                 piece_index++;
             }
