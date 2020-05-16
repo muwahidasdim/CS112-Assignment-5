@@ -136,12 +136,36 @@ class Position
 void game_init(char board[8][8]);
 void board_init(Position board[8][8]);
 void player_init(Piece [], Position board[8][8], char);
+void renderBoard(Position board[8][8]);
 void theGame();
 
 int main()
 {
-    
     theGame();
+    /*
+    char arr[25][33];    //on x axis everything is multiplied by 3 and on y axis everything is multiplied by 4
+    for (int i = 0;i <= 24;i++)
+    {
+        for (int j = 0;j <= 32;j++)
+        {
+            if (i % 3 == 0 || j % 4 == 0)
+                arr[i][j] = '*';
+            else
+                arr[i][j] = ' ';
+        }
+
+    }
+    for (int i = 0;i <= 24;i++)
+    {
+        for (int j = 0;j <= 32;j++)
+        {
+
+            cout << arr[i][j];
+
+        }
+        cout << endl;
+    }
+*/
     return 0;
 }
 
@@ -192,6 +216,7 @@ void player_init(Piece pieces[], Position board[8][8], char player)
             if(board[row][col].getIsDark())
             {
                 pieces[piece_index] = Piece(player, col, row);
+                board[row][col].setContainingValue(player);
                 piece_index++;
             }
         }
@@ -212,7 +237,7 @@ void theGame()
     {
         if(isPlayerOne)
         {
-            // To Be continued
+            renderBoard(board);
             gameCompelete = true;
         }
 
@@ -222,32 +247,31 @@ void theGame()
         }
     }
 }
-int main()
+
+void renderBoard(Position board[8][8])
 {
+    for(int i = 0; i < 11; i++)
+        cout << "---";
 
-    char arr[25][33];    //on x axis everything is multiplied by 3 and on y axis everything is multiplied by 4
-    for (int i = 0;i <= 24;i++)
-    {
-        for (int j = 0;j <= 32;j++)
+    cout << endl;
+    for(int row = 0; row < 8; row++)
+    {   
+        for(int col = 0; col < 8; col++)
         {
-            if (i % 3 == 0 || j % 4 == 0)
-                arr[i][j] = '*';
+            if(col == 0)
+            {
+                cout << "| " << board[row][col].getContainingValue() << " | ";
+            }
             else
-                arr[i][j] = ' ';
+            {
+                cout << board[row][col].getContainingValue() << " | ";
+            }            
         }
 
-    }
-    for (int i = 0;i <= 24;i++)
-    {
-        for (int j = 0;j <= 32;j++)
-        {
-
-            cout << arr[i][j];
-
-        }
+        cout << endl;
+        for(int i = 0; i < 11; i++)
+            cout << "---";
         cout << endl;
     }
-
-    return 0;
 }
 
