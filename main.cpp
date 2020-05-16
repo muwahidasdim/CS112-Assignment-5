@@ -120,6 +120,11 @@ class Position
             return isKingMaker;
         }
 
+        bool getIsDark()
+        {
+            return isDark;
+        }
+
         void getVals()
         {
             cout << "isDark: " << isDark << endl;
@@ -130,13 +135,13 @@ class Position
 
 void game_init(char board[8][8]);
 void board_init(Position board[8][8]);
-void player_init(Piece [], char, int);
+void player_init(Piece [], Position board[8][8], char);
 void theGame();
 
 int main()
 {
     
-
+    theGame();
     return 0;
 }
 
@@ -150,26 +155,46 @@ void board_init(Position board[8][8])
             if(!isLastDark)
             {
                 board[row][col] = Position(true, row);
-                isLastDark = true;
+                if(col != 7)
+                    isLastDark = true;
             }
             else
             {
                 board[row][col] = Position(false, row);
-                isLastDark = false;
+                if(col != 7)
+                    isLastDark = false;
             }
-            
-            board[row][col].getVals();
-            cout << endl << endl;
 
         }
     }
 }
 
-void player_init(Piece pieces[], char player, int numOfPieces = 12)
-{
-    for(int i = 0; i < numOfPieces; i++)
+void player_init(Piece pieces[], Position board[8][8], char player)
+{   
+    int piece_index = 0, max_row, row;
+
+    if(player == 'R')
     {
-        pieces[i] = Piece(player, i, i + 2);
+        row = 0;
+        max_row = 3;
+    }
+
+    else
+    {
+        row = 5;
+        max_row = 8;
+    }
+    
+    for(; row < max_row; row++)
+    {
+        for(int col = 0; col < 8; col++)
+        {
+            if(board[row][col].getIsDark())
+            {
+                pieces[piece_index] = Piece(player, col, row);
+                piece_index++;
+            }
+        }
     }
 }
 
@@ -180,14 +205,15 @@ void theGame()
     bool gameCompelete = false, isPlayerOne = true;
 
     board_init(board);
-    player_init(red_pieces, 'R');
-    player_init(white_pieces, 'W');
+    player_init(red_pieces, board, 'R');
+    player_init(white_pieces, board, 'W');
 
     while(!gameCompelete)
     {
         if(isPlayerOne)
         {
             // To Be continued
+            gameCompelete = true;
         }
 
         else
