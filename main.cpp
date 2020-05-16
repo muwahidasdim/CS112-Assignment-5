@@ -196,4 +196,32 @@ void theGame()
         }
     }
 }
+int main()
+{
+
+    char arr[25][33];    //on x axis everything is multiplied by 3 and on y axis everything is multiplied by 4
+    for (int i = 0;i <= 24;i++)
+    {
+        for (int j = 0;j <= 32;j++)
+        {
+            if (i % 3 == 0 || j % 4 == 0)
+                arr[i][j] = '*';
+            else
+                arr[i][j] = ' ';
+        }
+
+    }
+    for (int i = 0;i <= 24;i++)
+    {
+        for (int j = 0;j <= 32;j++)
+        {
+
+            cout << arr[i][j];
+
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
 
