@@ -7,7 +7,7 @@ class Piece
     int column, row;
     bool isKing;
 
-    
+
 public:
     Piece() {}
     Piece(char player, int row, int column, bool isKing = false)
@@ -16,6 +16,14 @@ public:
         this->column = column;
         this->row = row;
         this->isKing = isKing;
+    }
+    void setrow(int x)
+    {
+        row = x;
+    }
+    void setcolumn(int y)
+    {
+        column = y;
     }
     int getrow()
     {
@@ -48,7 +56,7 @@ public:
 
     void setContainingValue(char x)
     {
-        containingValue = x;
+       this-> containingValue = x ;
     }
 
     char getContainingValue()
@@ -190,29 +198,48 @@ void renderBoard(Position board[8][8])
     }
 }
 void playeronemoves(Piece red_pieces[12], Position board[8][8])
-{   
+{
+    Piece Move[36];
+    Piece old[36];
+   
     int move_choice = 48; // AscII encoding of 0;
+    int c = 0;
     for (int i = 0;i < 12;i++)
     {
         
-        if (board[red_pieces[i].getrow() + 1][red_pieces[i].getcolumn() + 1].getContainingValue() ==' ' && (red_pieces[i].getcolumn()+1)<8 && (red_pieces[i].getrow() + 1)<8)
-        {   
+        if (board[red_pieces[i].getrow() + 1][red_pieces[i].getcolumn() + 1].getContainingValue() == ' ' && (red_pieces[i].getcolumn() + 1) < 8 && (red_pieces[i].getrow() + 1) < 8)
+        {
+            
+     
             move_choice++;
+            c++;
             board[red_pieces[i].getrow() + 1][red_pieces[i].getcolumn() + 1].setContainingValue(move_choice);
-            
-            cout <<  "Possible Option:  row:" << red_pieces[i].getrow() + 1 << "  column:  " << red_pieces[i].getcolumn() + 1<<endl;
-            
+            cout << "Possible Option:  row:" << red_pieces[i].getrow() + 1 << "  column:  " << red_pieces[i].getcolumn() + 1 << endl;
+            old[c].setrow(red_pieces[i].getrow()) ;
+            old[c].setcolumn(red_pieces[i].getcolumn()) ;
+            Move[c].setrow(red_pieces[i].getrow() + 1)  ;
+            Move[c].setcolumn(red_pieces[i].getcolumn() + 1)  ;
         }
-        if (board[red_pieces[i].getrow() + 1][red_pieces[i].getcolumn() - 1].getContainingValue() ==' ' && (red_pieces[i].getcolumn()-1) >=0 && (red_pieces[i].getrow() + 1) <8)
+        if (board[red_pieces[i].getrow() + 1][red_pieces[i].getcolumn() - 1].getContainingValue() == ' ' && (red_pieces[i].getcolumn() - 1) >= 0 && (red_pieces[i].getrow() + 1) < 8)
         {
             move_choice++;
+            c++;
             board[red_pieces[i].getrow() + 1][red_pieces[i].getcolumn() - 1].setContainingValue(move_choice);
-            cout<< "Possible Option:  row:" << red_pieces[i].getrow() + 1 << "  column:  " << red_pieces[i].getcolumn() - 1<<endl;
-            
-
+            cout << "Possible Option:  row:" << red_pieces[i].getrow() + 1 << "  column:  " << red_pieces[i].getcolumn() - 1 << endl;
+            old[c].setrow(red_pieces[i].getrow())  ;
+            old[c].setcolumn(red_pieces[i].getcolumn())  ;
+            Move[c].setrow(red_pieces[i].getrow() + 1) ;
+            Move[c].setcolumn(red_pieces[i].getcolumn() - 1) ;
         }
-       
     }
+    renderBoard(board);
+    int option;
+    cout << "Enter where you want to move:  ";
+    cin >> option;
+    int total = c;
+            board[old[option].getrow()][old[option].getcolumn()].setContainingValue(' ');
+            board[Move[option].getrow()][Move[option].getcolumn()].setContainingValue('R');
+            
+           
 
-
-}
+    }
