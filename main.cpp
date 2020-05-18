@@ -152,8 +152,8 @@ void theGame()
         {
             renderBoard(board);
             playeronemoves(red_pieces, board);
-           gameCompelete = true;
-           renderBoard(board);
+            gameCompelete = true;
+            renderBoard(board);
         }
 
         else
@@ -190,21 +190,23 @@ void renderBoard(Position board[8][8])
     }
 }
 void playeronemoves(Piece red_pieces[12], Position board[8][8])
-{
+{   
+    int move_choice = 48; // AscII encoding of 0;
     for (int i = 0;i < 12;i++)
     {
         
         if (board[red_pieces[i].getrow() + 1][red_pieces[i].getcolumn() + 1].getContainingValue() ==' ' && (red_pieces[i].getcolumn()+1)<8 && (red_pieces[i].getrow() + 1)<8)
-        {
-            board[red_pieces[i].getrow() + 1][red_pieces[i].getcolumn() + 1].setContainingValue('x');
+        {   
+            move_choice++;
+            board[red_pieces[i].getrow() + 1][red_pieces[i].getcolumn() + 1].setContainingValue(move_choice);
             
             cout <<  "Possible Option:  row:" << red_pieces[i].getrow() + 1 << "  column:  " << red_pieces[i].getcolumn() + 1<<endl;
             
         }
         if (board[red_pieces[i].getrow() + 1][red_pieces[i].getcolumn() - 1].getContainingValue() ==' ' && (red_pieces[i].getcolumn()-1) >=0 && (red_pieces[i].getrow() + 1) <8)
         {
-    
-            board[red_pieces[i].getrow() + 1][red_pieces[i].getcolumn() - 1].setContainingValue('x');
+            move_choice++;
+            board[red_pieces[i].getrow() + 1][red_pieces[i].getcolumn() - 1].setContainingValue(move_choice);
             cout<< "Possible Option:  row:" << red_pieces[i].getrow() + 1 << "  column:  " << red_pieces[i].getcolumn() - 1<<endl;
             
 
