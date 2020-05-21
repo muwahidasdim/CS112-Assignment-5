@@ -108,18 +108,22 @@ public:
 
 void Piece::validateMoves(Position board[8][8])
 {
+    cout << "Row: " << row << '\t' << "Column: " << column << endl;
+    cout << "Status: " << (isKing ? "King":"Not a King") << endl;
+    cout << "Possible Moves: ";
 
     // int move_choice = 48; // AscII encoding of 0;
-    if(player == 'R')
+    if(player == 'R') // PLAYER IS RED
     {
         if(!isKing)
         {   
-            if (board[row + 1][column + 1].getContainingValue() == 'W')
+            if (board[row + 1][column + 1].getContainingValue() == 'W' && (column + 1 < 8) && (row + 1 < 8))
             {
                 if((board[row + 2][column + 2].getContainingValue() == ' ' || (board[row + 2][column + 2].getContainingValue() != 'W' && board[row + 2][column + 2].getContainingValue() != player)) && (column + 2 < 8) && (row + 2 < 8))
                 {
                     move_choice++;
                     board[row + 2][column + 2].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
                     inJump = true;
                 }
             }
@@ -129,6 +133,7 @@ void Piece::validateMoves(Position board[8][8])
                 {
                     move_choice++;
                     board[row + 2][column - 2].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
                     inJump = true;
                 }
             }
@@ -138,11 +143,13 @@ void Piece::validateMoves(Position board[8][8])
                 {
                     move_choice++;
                     board[row + 1][column + 1].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
                 }
                 if (board[row + 1][column - 1].getContainingValue() == ' ' && (column - 1) >= 0 && (row + 1) < 8)
                 {
                     move_choice++;
                     board[row + 1][column - 1].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
                 }
             }
       
@@ -151,7 +158,7 @@ void Piece::validateMoves(Position board[8][8])
 
         }
 
-        else
+        else // RED KING
         {
             if (board[row + 1][column + 1].getContainingValue() == 'W' && (column + 1 < 8) && (row + 1 < 8))
             {
@@ -159,16 +166,21 @@ void Piece::validateMoves(Position board[8][8])
                 {
                     move_choice++;
                     board[row + 2][column + 2].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
                     inJump = true;
                 }
             }
             if((board[row + 1][column].getContainingValue() == 'W') && (row + 1 < 8))
             {
                 if((board[row + 2][column].getContainingValue() == ' ' || (board[row + 2][column].getContainingValue() != 'W' && board[row + 2][column].getContainingValue() != player)) && (row + 2 < 8))
-                {
+                {   
+                    cout << "THOS CALLED\n";
+                    cout << "move_choice: " << Piece::move_choice << endl;
                     move_choice++;
                     board[row + 2][column].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
                     inJump = true;
+                    cout << "Value of inJump: " << inJump << endl;
                 }
 
             }
@@ -179,6 +191,7 @@ void Piece::validateMoves(Position board[8][8])
                 {
                     move_choice++;
                     board[row + 2][column - 2].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
                     inJump = true;
                 }
             }
@@ -188,6 +201,7 @@ void Piece::validateMoves(Position board[8][8])
                 {
                     move_choice++;
                     board[row - 2][column + 2].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
                     inJump = true;
                 }
             }
@@ -197,6 +211,7 @@ void Piece::validateMoves(Position board[8][8])
                 {
                     move_choice++;
                     board[row - 2][column].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
                     inJump = true;
                 }
 
@@ -208,46 +223,54 @@ void Piece::validateMoves(Position board[8][8])
                 {
                     move_choice++;
                     board[row - 2][column - 2].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
                     inJump = true;
                 }
             }
 
 
             if(!inJump)
+            {
                 if (board[row + 1][column - 1].getContainingValue() == ' ' && (column - 1 >= 0) && (row + 1) < 8)
                 {
                     move_choice++;
                     board[row + 1][column - 1].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
                 }
                 if(board[row + 1][column].getContainingValue() == ' ' && (row + 1 < 8))
                 {
                     move_choice++;
                     board[row + 1][column].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
                 }
                 if ((board[row + 1][column + 1].getContainingValue() == ' ') && (column + 1 < 8) && (row + 1 < 8))
                 {
                     move_choice++;
                     board[row + 1][column + 1].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
                 }
                 if ((board[row - 1][column + 1].getContainingValue() == ' ') && (column + 1 < 8) && (row - 1 >= 0))
                 {
                     move_choice++;
                     board[row - 1][column + 1].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
                 }
                 if(board[row - 1][column].getContainingValue() == ' ' && (row - 1 >= 0))
                 {
                     move_choice++;
                     board[row - 1][column].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
                 }
                 if ((board[row - 1][column - 1].getContainingValue() == ' ') && (column - 1 >= 0) && (row - 1 >= 0))
                 {
                     move_choice++;
                     board[row - 1][column - 1].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
                 }
-
+            }
         }
     }
-    else
+    else // PLAYER IS WHITE
     {
         if(!isKing)
         {   
@@ -255,9 +278,9 @@ void Piece::validateMoves(Position board[8][8])
             {
                 if((board[row - 2][column + 2].getContainingValue() == ' ' || (board[row - 2][column + 2].getContainingValue() != 'R' && board[row - 2][column + 2].getContainingValue() != player)) && (column + 2 < 8) && (row - 2 >= 0))
                 {   
-                    cout << "THE FIRST CALLED\n";
                     move_choice++;
                     board[row - 2][column + 2].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
                     inJump = true;
                 }
             }
@@ -265,9 +288,9 @@ void Piece::validateMoves(Position board[8][8])
             {
                 if((board[row - 2][column - 2].getContainingValue() == ' ' || (board[row - 2][column - 2].getContainingValue() != 'R' && board[row - 2][column - 2].getContainingValue() != player)) && (column - 2 >= 0) && (row - 2 >= 0))
                 {
-                    cout << "THE SECOND CALLED\n";
                     move_choice++;
                     board[row - 2][column - 2].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
                     inJump = true;
                 }
             }
@@ -277,39 +300,131 @@ void Piece::validateMoves(Position board[8][8])
                 {
                     move_choice++;
                     board[row - 1][column + 1].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
                 }
                 if (board[row - 1][column - 1].getContainingValue() == ' ' && (column - 1) >= 0 && (row - 1) < 8)
                 {
                     move_choice++;
                     board[row - 1][column - 1].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
                 }
             }
       
         }
-/*
-        else
-        {
 
-            if (board[row - 1][column - 1].getContainingValue() == ' ' && (column - 1 >= 0) && (row - 1 >= 0))
+        else // WHITE KING
+        {
+            if (board[row + 1][column + 1].getContainingValue() == 'R' && (column + 1 < 8) && (row + 1 < 8))
             {
-                move_choice++;
-                board[row - 1][column - 1].setContainingValue(move_choice);
+                if((board[row + 2][column + 2].getContainingValue() == ' ' || (board[row + 2][column + 2].getContainingValue() != 'R' && board[row + 2][column + 2].getContainingValue() != player)) && (column + 2 < 8) && (row + 2 < 8))
+                {
+                    move_choice++;
+                    board[row + 2][column + 2].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
+                    inJump = true;
+                }
             }
-            if(board[row - 1][column].getContainingValue() == ' ' && (row - 1 >= 0))
+            if((board[row + 1][column].getContainingValue() == 'R') && (row + 1 < 8))
             {
-                move_choice++;
-                board[row - 1][column].setContainingValue(move_choice);
+                if((board[row + 2][column].getContainingValue() == ' ' || (board[row + 2][column].getContainingValue() != 'R' && board[row + 2][column].getContainingValue() != player)) && (row + 2 < 8))
+                {   
+                    cout << "THOS CALLED\n";
+                    cout << "move_choice: " << Piece::move_choice << endl;
+                    move_choice++;
+                    board[row + 2][column].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
+                    inJump = true;
+                    cout << "Value of inJump: " << inJump << endl;
+                }
+
             }
-    
-            if ((board[row - 1][column + 1].getContainingValue() == ' ') && (column + 1 < 8) && (row - 1 >= 0))
+
+            if ((board[row + 1][column - 1].getContainingValue() == 'R') && (column - 1 >= 0) && (row + 1 < 8))
             {
-                move_choice++;
-                board[row - 1][column + 1].setContainingValue(move_choice);
+                if((board[row + 2][column - 2].getContainingValue() == ' ' || (board[row + 2][column - 2].getContainingValue() != 'R' && board[row + 2][column - 2].getContainingValue() != player)) && (column - 2 >= 0) && (row + 2 < 8))
+                {
+                    move_choice++;
+                    board[row + 2][column - 2].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
+                    inJump = true;
+                }
             }
-        }*/
+            if (board[row - 1][column + 1].getContainingValue() == 'R' && (column + 1 < 8) && (row - 1 >= 0))
+            {
+                if((board[row - 2][column + 2].getContainingValue() == ' ' || (board[row - 2][column + 2].getContainingValue() != 'R' && board[row - 2][column + 2].getContainingValue() != player)) && (column + 2 < 8) && (row - 2 >= 0))
+                {
+                    move_choice++;
+                    board[row - 2][column + 2].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
+                    inJump = true;
+                }
+            }
+            if((board[row - 1][column].getContainingValue() == 'R') && (row - 1 >= 0))
+            {
+                if((board[row - 2][column].getContainingValue() == ' ' || (board[row - 2][column].getContainingValue() != 'R' && board[row - 2][column].getContainingValue() != player)) && (row - 2 >= 0))
+                {
+                    move_choice++;
+                    board[row - 2][column].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
+                    inJump = true;
+                }
+
+            }
+
+            if ((board[row - 1][column - 1].getContainingValue() == 'R') && (column - 1 >= 0) && (row - 1 >= 0))
+            {
+                if((board[row - 2][column - 2].getContainingValue() == ' ' || (board[row - 2][column - 2].getContainingValue() != 'R' && board[row - 2][column - 2].getContainingValue() != player)) && (column - 2 >= 0) && (row - 2 >= 0))
+                {
+                    move_choice++;
+                    board[row - 2][column - 2].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
+                    inJump = true;
+                }
+            }
+
+
+            if(!inJump)
+            {
+                if (board[row + 1][column - 1].getContainingValue() == ' ' && (column - 1 >= 0) && (row + 1) < 8)
+                {
+                    move_choice++;
+                    board[row + 1][column - 1].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
+                }
+                if(board[row + 1][column].getContainingValue() == ' ' && (row + 1 < 8))
+                {
+                    move_choice++;
+                    board[row + 1][column].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
+                }
+                if ((board[row + 1][column + 1].getContainingValue() == ' ') && (column + 1 < 8) && (row + 1 < 8))
+                {
+                    move_choice++;
+                    board[row + 1][column + 1].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
+                }
+                if ((board[row - 1][column + 1].getContainingValue() == ' ') && (column + 1 < 8) && (row - 1 >= 0))
+                {
+                    move_choice++;
+                    board[row - 1][column + 1].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
+                }
+                if(board[row - 1][column].getContainingValue() == ' ' && (row - 1 >= 0))
+                {
+                    move_choice++;
+                    board[row - 1][column].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
+                }
+                if ((board[row - 1][column - 1].getContainingValue() == ' ') && (column - 1 >= 0) && (row - 1 >= 0))
+                {
+                    move_choice++;
+                    board[row - 1][column - 1].setContainingValue(move_choice);
+                    cout << (char)move_choice << ", ";
+                }
+            }
+        
+        }
     }
-    
-    
             
 }
 
@@ -327,8 +442,8 @@ void theGame();
 void playeronemoves(Piece red_pieces[12], Position board[8][8]);
 void makeMove(Piece *&, Piece *&, Position board[8][8], char);
 int indexFinder(Piece *&, char, int, int);
-void positionUpdater(Piece *&, Position board[8][8], char, int, int, int);
-void makeJump(Piece *&, Piece *&, Position board[8][8], char,int, int, int);
+void positionUpdater(Piece *&, Position board[8][8], char, int, int, int, int, int);
+void makeJump(Piece *&, Piece *&, Position board[8][8], char, int, int, int, int, int);
 void afterMoveCleaner(Position board[8][8]);
 void modifyPieces(Piece *&, int, char);
 
@@ -422,7 +537,7 @@ void theGame()
     board_init(board);
     player_init(red_pieces, board, 'R');
     player_init(white_pieces, board, 'W');
-   red_pieces[9].setIsKing();
+    // red_pieces[9].setIsKing(); REMOVE THIS SKOPJSJO
     renderBoard(board);
     while (!gameCompelete)
     {   
@@ -431,12 +546,16 @@ void theGame()
 
             cout << endl << "Red: " << numOfReds << endl;
             for(int i = 0; i < numOfReds; i++)
-            {
+            {   
+                // cout << "i: "<< i << endl;
+                // cout << "move_choice: " << Piece::move_choice << endl;3
                 red_pieces[i].validateMoves(board);
+                cout << endl << endl;
                 if(Piece::inJump && !jumpChecked)
                 {
                     afterMoveCleaner(board);
                     jumpChecked = true;
+                    
                 }
 
             }
@@ -455,6 +574,7 @@ void theGame()
             for(int i = 0; i < numOfWhites; i++)
             {
                 white_pieces[i].validateMoves(board);
+                cout << endl << endl;
                 if(Piece::inJump && !jumpChecked)
                 {
                     afterMoveCleaner(board);
@@ -547,42 +667,63 @@ void playeronemoves(Piece red_pieces[12], Position board[8][8])
 
 void makeMove(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], char player)
 {
-    int choice, piece_checker = 0, index;
-    cout << "Enter the number corresponding to your choice. If there are two possible moves with the same digit, enter an extra 1 or 2 depending on whether you want to move the 1st piece or the second from left: ";
-    cin >> choice, cout << endl;
-    if(choice > 10)
-    {
-        piece_checker = choice % 10;
-        choice/=10;
-    }
+    int row_choice, col_choice, move_choice, index;
+    bool correctPiece = false;
 
+    while(!correctPiece)
+    {
+        cout << "Please kindly enter the row of the piece you want to move: ", cin >> row_choice, cout << endl;
+        cout << "Please kindly enter the column of the piece you want to move: ", cin >> col_choice, cout << endl;
+        if(board[row_choice][col_choice].getContainingValue() == player)
+            correctPiece = true;
+        else
+            cout << "Your piece does not exist at this position, try again!\n";
+    }
+    cout << "Please kindly enter move you want to make: ", cin >> move_choice, cout << endl;
 
     for(int row = 0; row < 8; row++)
     {
         for(int col = 0; col < 8; col++)
         {
-            if(board[row][col].getContainingValue() == choice + '0')
+            if(board[row][col].getContainingValue() == move_choice + '0')
             {
                 if(!Piece::inJump)
                 {
-                    board[row][col].setContainingValue(player);
                     if(player == 'R')
-                        positionUpdater(red_pieces, board, player, piece_checker, row, col);
+                    {
+                        index = indexFinder(red_pieces, player, row_choice, col_choice);
+                        positionUpdater(red_pieces, board, player, index, row_choice, col_choice, row, col);
+                    }
                     else
-                        positionUpdater(white_pieces, board, player, piece_checker, row, col);
-
+                    {   
+                        index = indexFinder(white_pieces, player, row_choice, col_choice);
+                        positionUpdater(white_pieces, board, player, index, row_choice, col_choice, row, col);
+                    }
                     continue;
                 }
                 else
                 {
-                    board[row][col].setContainingValue(player);
-                    makeJump(red_pieces, white_pieces, board, player, piece_checker, row, col);
+                    if(player == 'R')
+                        index = indexFinder(red_pieces, player, row_choice, col_choice);
+                    else
+                        index = indexFinder(white_pieces, player, row_choice, col_choice);
+                    
+                    makeJump(red_pieces, white_pieces, board, player, index, row_choice, col_choice, row, col);
                     continue;
                 }
                 
             }
-            else
+            else if(row == 7 && col == 7)
+            {
+                cout << "Invalid Move!\n";
+                Piece::inJump = false;
                 board[row][col].afterMoveCleaner();
+            }
+            else
+            {
+                board[row][col].afterMoveCleaner();
+            }
+            
         }
     }
     
@@ -604,447 +745,386 @@ int indexFinder(Piece *&pieces, char player,int row, int col)
     
 }
 
-void positionUpdater(Piece *&pieces, Position board[8][8], char player, int piece_selector, int row, int col)
+void positionUpdater(Piece *&pieces, Position board[8][8], char player, int index, int old_row, int old_col, int new_row, int new_col)
 {
-    int index;
-    if(player == 'R')
+    if(!pieces[index].getIsKing())
     {
-        switch (piece_selector)
+        if(player == 'R') // RED PLAYER
         {
-        case 1:
-            if(board[row - 1][col - 1].getContainingValue() == player)
+            if(old_row + 1 == new_row)
             {
-                index = indexFinder(pieces, player, row - 1, col - 1);
-                pieces[index].makeMove(row, col);
-                board[row - 1][col - 1].setContainingValue(' ');
-            }
-            else if(board[row - 1][col].getContainingValue() == player)
-            {
-                index = indexFinder(pieces, player, row - 1, col);
-                if(pieces[index].getIsKing())
+                if(old_col + 1 == new_col)
                 {
-                    pieces[index].makeMove(row, col);
-                    board[row - 1][col].setContainingValue(' ');
+                    pieces[index].makeMove(new_row, new_col);
+                    board[old_row][old_col].setContainingValue(' ');
+                    board[new_row][new_col].setContainingValue(player);
                 }
-                else if(board[row - 1][col + 1].getContainingValue() == player)
+                else if(old_col - 1 == new_col)
                 {
-                    index = indexFinder(pieces, player, row - 1, col + 1);
-                    pieces[index].makeMove(row, col);
-                    board[row - 1][col + 1].setContainingValue(' ');
+                    pieces[index].makeMove(new_row, new_col);
+                    board[old_row][old_col].setContainingValue(' ');
+                    board[new_row][new_col].setContainingValue(player);
                 }
                 else
                 {
-                    board[row][col].setContainingValue(' ');
-                    cout << "Invalid choice!\n";
+                    board[new_row][new_col].setContainingValue(' ');
+                    cout << "Invalid Move!\n";
                 }
-                
-            }
-
-            else if(board[row - 1][col + 1].getContainingValue() == player)
-            {
-                index = indexFinder(pieces, player, row - 1, col + 1);
-                pieces[index].makeMove(row, col);
-                board[row - 1][col + 1].setContainingValue(' ');
             }
             else
             {
-                board[row][col].setContainingValue(' ');
-                cout << "Invalid choice!\n";
+                board[new_row][new_col].setContainingValue(' ');
+                cout << "Invalid Move!\n";
             }
-            break;
-            
-
-        case 2:
-            
-            if(board[row - 1][col - 1].getContainingValue() == player && board[row - 1][col].getContainingValue() == player)
-            {
-                index = indexFinder(pieces, player, row - 1, col);
-                if(pieces[index].getIsKing())
-                {
-                    pieces[index].makeMove(row, col);
-                    board[row - 1][col].setContainingValue(' ');
-                }
-                else if(board[row - 1][col - 1].getContainingValue() == player && board[row - 1][col + 1].getContainingValue() == player)
-                {
-                    index = indexFinder(pieces, player, row - 1, col + 1);
-                    pieces[index].makeMove(row, col);
-                    board[row - 1][col + 1].setContainingValue(' ');
-                }
-                else
-                {
-                    board[row][col].setContainingValue(' ');
-                    cout << "Invalid choice!\n";
-                }
-            }
-            else if(board[row - 1][col - 1].getContainingValue() == player && board[row - 1][col + 1].getContainingValue() == player)
-            {
-                index = indexFinder(pieces, player, row - 1, col + 1);
-                pieces[index].makeMove(row, col);
-                board[row - 1][col + 1].setContainingValue(' ');
-            }
-            else if(board[row - 1][col].getContainingValue() == player && board[row - 1][col + 1].getContainingValue() == player)
-            {
-                index = indexFinder(pieces, player, row - 1, col + 1);
-                pieces[index].makeMove(row, col);
-                board[row - 1][col + 1].setContainingValue(' ');
-            }
-            else
-            {
-                board[row][col].setContainingValue(' ');
-                cout << "Invalid choice!\n";
-            }
-
-            break;
-    /*
-        case 3:
-            index = indexFinder(pieces, player, row - 1, col + 1);
-            board[row - 1][col + 1].setContainingValue(' ');
-            pieces[index].makeMove(row - 1, col + 1);
-            break;*/
-        default:
-            board[row][col].setContainingValue(' ');
-            cout << "Invalid choice!\n";
-            break;
         }
+        else // WHITE PLAYER
+        {
+            if(old_row - 1 == new_row)
+            {
+                if(old_col + 1 == new_col)
+                {
+                    pieces[index].makeMove(new_row, new_col);
+                    board[old_row][old_col].setContainingValue(' ');
+                    board[new_row][new_col].setContainingValue(player);
+                }
+                else if(old_col - 1 == new_col)
+                {
+                    pieces[index].makeMove(new_row, new_col);
+                    board[old_row][old_col].setContainingValue(' ');
+                    board[new_row][new_col].setContainingValue(player);
+                }
+                else
+                {
+                    board[new_row][new_col].setContainingValue(' ');
+                    cout << "Invalid Move!\n";
+                }
+            }
+            else
+            {
+                board[new_row][new_col].setContainingValue(' ');
+                cout << "Invalid Move!\n";
+            }
+        }
+        
     }
+
     else
     {
-        switch (piece_selector)
+        if(old_row + 1 == new_row)
         {
-        case 1:
-            if(board[row + 1][col - 1].getContainingValue() == player)
+            if(old_col + 1 == new_col)
             {
-                index = indexFinder(pieces, player, row + 1, col - 1);
-                pieces[index].makeMove(row, col);
-                board[row + 1][col - 1].setContainingValue(' ');
+                pieces[index].makeMove(new_row, new_col);
+                board[old_row][old_col].setContainingValue(' ');
+                board[new_row][new_col].setContainingValue(player);
             }
-            else if(board[row + 1][col].getContainingValue() == player)
+            else if(old_col - 1 == new_col)
             {
-                index = indexFinder(pieces, player, row + 1, col);
-                if(pieces[index].getIsKing())
-                {
-                    pieces[index].makeMove(row, col);
-                    board[row + 1][col].setContainingValue(' ');
-                }
-                else if(board[row + 1][col + 1].getContainingValue() == player)
-                {
-                    index = indexFinder(pieces, player, row + 1, col + 1);
-                    pieces[index].makeMove(row, col);
-                    board[row + 1][col + 1].setContainingValue(' ');
-                }
-                else
-                {
-                    board[row][col].setContainingValue(' ');
-                    cout << "Invalid choice!\n";
-                }
-                
+                pieces[index].makeMove(new_row, new_col);
+                board[old_row][old_col].setContainingValue(' ');
+                board[new_row][new_col].setContainingValue(player);
             }
-
-            else if(board[row + 1][col + 1].getContainingValue() == player)
+            else if(old_col == new_col)
             {
-                index = indexFinder(pieces, player, row + 1, col + 1);
-                pieces[index].makeMove(row, col);
-                board[row + 1][col + 1].setContainingValue(' ');
+                pieces[index].makeMove(new_row, new_col);
+                board[old_row][old_col].setContainingValue(' ');
+                board[new_row][new_col].setContainingValue(player);
             }
             else
             {
-                board[row][col].setContainingValue(' ');
-                cout << "Invalid choice!\n";
+                board[new_row][new_col].setContainingValue(' ');
+                cout << "Invalid Move!\n";
             }
-            break;
-            
-
-        case 2:
-            
-            if(board[row + 1][col - 1].getContainingValue() == player && board[row + 1][col].getContainingValue() == player)
+        }
+        else if(old_row - 1 == new_row)
+        {
+            if(old_col + 1 == new_col)
             {
-                index = indexFinder(pieces, player, row + 1, col);
-                if(pieces[index].getIsKing())
-                {
-                    pieces[index].makeMove(row, col);
-                    board[row + 1][col].setContainingValue(' ');
-                }
-                else if(board[row + 1][col - 1].getContainingValue() == player && board[row + 1][col + 1].getContainingValue() == player)
-                {
-                    index = indexFinder(pieces, player, row + 1, col + 1);
-                    pieces[index].makeMove(row, col);
-                    board[row + 1][col + 1].setContainingValue(' ');
-                }
-                else
-                {
-                    board[row][col].setContainingValue(' ');
-                    cout << "Invalid choice!\n";
-                }
+                pieces[index].makeMove(new_row, new_col);
+                board[old_row][old_col].setContainingValue(' ');
+                board[new_row][new_col].setContainingValue(player);
             }
-            else if(board[row + 1][col - 1].getContainingValue() == player && board[row + 1][col + 1].getContainingValue() == player)
+            else if(old_col - 1 == new_col)
             {
-                index = indexFinder(pieces, player, row + 1, col + 1);
-                pieces[index].makeMove(row, col);
-                board[row + 1][col + 1].setContainingValue(' ');
+                pieces[index].makeMove(new_row, new_col);
+                board[old_row][old_col].setContainingValue(' ');
+                board[new_row][new_col].setContainingValue(player);
             }
-            else if(board[row + 1][col].getContainingValue() == player && board[row + 1][col + 1].getContainingValue() == player)
+            else if(old_col == new_col)
             {
-                index = indexFinder(pieces, player, row + 1, col + 1);
-                pieces[index].makeMove(row, col);
-                board[row + 1][col + 1].setContainingValue(' ');
+                pieces[index].makeMove(new_row, new_col);
+                board[old_row][old_col].setContainingValue(' ');
+                board[new_row][new_col].setContainingValue(player);
             }
             else
             {
-                board[row][col].setContainingValue(' ');
-                cout << "Invalid choice!\n";
+                board[new_row][new_col].setContainingValue(' ');
+                cout << "Invalid Move!\n";
             }
-
-            break;
-    /*
-        case 3:
-            index = indexFinder(pieces, player, row + 1, col + 1);
-            board[row + 1][col + 1].setContainingValue(' ');
-            pieces[index].makeMove(row + 1, col + 1);
-            break;*/
-        default:
-            board[row][col].setContainingValue(' ');
-            cout << "Invalid choice!\n";
-            break;
-        }        
+        }
+        else
+        {
+            board[new_row][new_col].setContainingValue(' ');
+            cout << "Invalid Move!\n";
+        }
     }
-    
 }
 
-void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], char player, int piece_selector, int row, int col)
-{
-    int index;
-    if(player == 'R')
+void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], char player, int this_index, int old_row, int old_col, int new_row, int new_col)
+{   
+    int other_index;
+    if(player == 'R') // RED PLAYER
     {
-        switch (piece_selector)
+        if(!red_pieces[this_index].getIsKing())
         {
-        case 1:
-            if(board[row - 1][col - 1].getContainingValue() == 'W')
+            if(old_row + 2 == new_row)
             {
-                index = indexFinder(red_pieces, player, row - 2, col - 2);
-                red_pieces[index].makeMove(row, col);
-                index = indexFinder(white_pieces, 'W', row - 1, col - 1);
-                modifyPieces(white_pieces, index, 'W');
-                board[row - 2][col - 2].setContainingValue(' ');
-                board[row - 1][col - 1].setContainingValue(' ');
-            }
-            else if(board[row - 1][col].getContainingValue() == 'W')
-            {
-                index = indexFinder(red_pieces, player, row - 2, col);
-                if(red_pieces[index].getIsKing())
+                if(old_col + 2 == new_col && board[old_row + 1][old_col + 1].getContainingValue() == 'W')
                 {
-                    red_pieces[index].makeMove(row, col);
-                    index = indexFinder(white_pieces, 'W', row - 1, col);
-                    modifyPieces(white_pieces, index, 'W');
-                    board[row - 2][col].setContainingValue(' ');
-                    board[row - 1][col].setContainingValue(' ');
+                    red_pieces[this_index].makeMove(new_row, new_col);
+                    other_index = indexFinder(white_pieces, 'W', old_row + 1, old_col + 1);
+                    modifyPieces(white_pieces, other_index, 'W');
+                    board[old_row][old_col].setContainingValue(' ');
+                    board[old_row + 1][old_col + 1].setContainingValue(' ');
+                    board[new_row][new_col].setContainingValue(player);
                 }
-                else if(board[row - 1][col + 1].getContainingValue() == 'W')
+                else if(old_col - 2 == new_col && board[old_row + 1][old_col - 1].getContainingValue() == 'W')
                 {
-                    index = indexFinder(red_pieces, player, row - 2, col + 2);
-                    red_pieces[index].makeMove(row, col);
-                    index = indexFinder(white_pieces, 'W', row - 1, col + 1);
-                    modifyPieces(white_pieces, index, 'W');
-                    board[row - 2][col + 2].setContainingValue(' ');
-                    board[row - 1][col + 1].setContainingValue(' ');
+                    red_pieces[this_index].makeMove(new_row, new_col);
+                    other_index = indexFinder(white_pieces, 'W', old_row + 1, old_col - 1);
+                    modifyPieces(white_pieces, other_index, 'W');
+                    board[old_row][old_col].setContainingValue(' ');
+                    board[old_row + 1][old_col - 1].setContainingValue(' ');
+                    board[new_row][new_col].setContainingValue(player);
                 }
                 else
                 {
-                    board[row][col].setContainingValue(' ');
-                    cout << "Invalid choice!\n";
+                    Piece::inJump = false;
+                    board[new_row][new_col].setContainingValue(' ');
+                    cout << "Invalid Move! You Must Jump!\n";
                 }
-                
-            }
-
-            else if(board[row - 1][col + 1].getContainingValue() == 'W')
-            {
-                index = indexFinder(red_pieces, player, row - 2, col + 2);
-                red_pieces[index].makeMove(row, col);
-                index = indexFinder(white_pieces, 'W', row - 1, col + 1);
-                modifyPieces(white_pieces, index, 'W');
-                board[row - 2][col + 2].setContainingValue(' ');
-                board[row - 1][col + 1].setContainingValue(' ');
             }
             else
             {
-                board[row][col].setContainingValue(' ');
-                cout << "Invalid choice!\n";
+                Piece::inJump = false;
+                board[new_row][new_col].setContainingValue(' ');
+                cout << "Invalid Move! You Must Jump!\n";
             }
-            break;
-
-        case 2:
-            
-            if(board[row - 2][col - 2].getContainingValue() == player && board[row - 2][col].getContainingValue() == player && board[row - 1][col].getContainingValue() == 'W')
-            {
-                index = indexFinder(red_pieces, player, row - 2, col);
-                if(red_pieces[index].getIsKing())
-                {
-                    red_pieces[index].makeMove(row, col);
-                    index = indexFinder(white_pieces, 'W', row - 1, col);
-                    modifyPieces(white_pieces, index, 'W');
-                    board[row - 2][col].setContainingValue(' ');
-                    board[row - 1][col].setContainingValue(' ');
-                }
-                else if(board[row - 2][col - 2].getContainingValue() == player && board[row - 2][col + 2].getContainingValue() == player && board[row - 1][col + 1].getContainingValue() == 'W')
-                {
-                    index = indexFinder(red_pieces, player, row - 2, col + 2);
-                    red_pieces[index].makeMove(row, col);
-                    index = indexFinder(white_pieces, 'W', row - 1, col + 1);
-                    modifyPieces(white_pieces, index, 'W');
-                    board[row - 2][col + 2].setContainingValue(' ');
-                    board[row - 1][col + 1].setContainingValue(' ');
-                }
-                else
-                {
-                    board[row][col].setContainingValue(' ');
-                    cout << "Invalid choice!\n";
-                }
-            }
-            else if(board[row - 2][col - 2].getContainingValue() == player && board[row - 2][col + 2].getContainingValue() == player && board[row - 1][col + 1].getContainingValue() == 'W')
-            {
-                index = indexFinder(red_pieces, player, row - 2, col + 2);
-                red_pieces[index].makeMove(row, col);
-                index = indexFinder(white_pieces, 'W', row - 1, col + 1);
-                modifyPieces(white_pieces, index, 'W');
-                board[row - 2][col + 2].setContainingValue(' ');
-                board[row - 1][col + 1].setContainingValue(' ');
-            }
-            
-            else if(board[row - 2][col].getContainingValue() == player && board[row - 2][col + 2].getContainingValue() == player && board[row - 1][col + 1].getContainingValue() == 'W')
-            {
-                index = indexFinder(red_pieces, player, row - 2, col + 2);
-                red_pieces[index].makeMove(row, col);
-                index = indexFinder(white_pieces, 'W', row - 1, col + 1);
-                modifyPieces(white_pieces, index, 'W');
-                board[row - 2][col + 2].setContainingValue(' ');
-                board[row - 1][col + 1].setContainingValue(' ');
-            }
-            else
-            {
-                board[row][col].setContainingValue(' ');
-                cout << "Invalid choice!\n";
-            }
-
-            break;
-        default:
-            break;
         }
+        else // RED KING
+        {
+            if(old_row + 2 == new_row)
+            {
+                if(old_col + 2 == new_col && board[old_row + 1][old_col + 1].getContainingValue() == 'W')
+                {
+                    red_pieces[this_index].makeMove(new_row, new_col);
+                    other_index = indexFinder(white_pieces, 'W', old_row + 1, old_col + 1);
+                    modifyPieces(white_pieces, other_index, 'W');
+                    board[old_row][old_col].setContainingValue(' ');
+                    board[old_row + 1][old_col + 1].setContainingValue(' ');
+                    board[new_row][new_col].setContainingValue(player);
+                }
+                else if(old_col - 2 == new_col && board[old_row + 1][old_col - 1].getContainingValue() == 'W')
+                {
+                    red_pieces[this_index].makeMove(new_row, new_col);
+                    other_index = indexFinder(white_pieces, 'W', old_row + 1, old_col - 1);
+                    modifyPieces(white_pieces, other_index, 'W');
+                    board[old_row][old_col].setContainingValue(' ');
+                    board[old_row + 1][old_col - 1].setContainingValue(' ');
+                    board[new_row][new_col].setContainingValue(player);
+                }
+                else if(old_col == new_col && board[old_row + 1][old_col].getContainingValue() == 'W')
+                {
+                    red_pieces[this_index].makeMove(new_row, new_col);
+                    other_index = indexFinder(white_pieces, 'W', old_row + 1, old_col);
+                    modifyPieces(white_pieces, other_index, 'W');
+                    board[old_row][old_col].setContainingValue(' ');
+                    board[old_row + 1][old_col].setContainingValue(' ');
+                    board[new_row][new_col].setContainingValue(player);
+                }
+
+                else
+                {
+                    Piece::inJump = false;
+                    board[new_row][new_col].setContainingValue(' ');
+                    cout << "Invalid Move! You Must Jump!\n";
+                }
+            } 
+
+            else if(old_row - 2 == new_row)
+            {
+                if(old_col + 2 == new_col && board[old_row - 1][old_col + 1].getContainingValue() == 'W')
+                {
+                    red_pieces[this_index].makeMove(new_row, new_col);
+                    other_index = indexFinder(white_pieces, 'W', old_row - 1, old_col + 1);
+                    modifyPieces(white_pieces, other_index, 'W');
+                    board[old_row][old_col].setContainingValue(' ');
+                    board[old_row - 1][old_col + 1].setContainingValue(' ');
+                    board[new_row][new_col].setContainingValue(player);
+                }
+                else if(old_col - 2 == new_col && board[old_row - 1][old_col - 1].getContainingValue() == 'W')
+                {
+                    red_pieces[this_index].makeMove(new_row, new_col);
+                    other_index = indexFinder(white_pieces, 'W', old_row - 1, old_col - 1);
+                    modifyPieces(white_pieces, other_index, 'W');
+                    board[old_row][old_col].setContainingValue(' ');
+                    board[old_row - 1][old_col - 1].setContainingValue(' ');
+                    board[new_row][new_col].setContainingValue(player);
+                }
+                else if(old_col == new_col && board[old_row - 1][old_col].getContainingValue() == 'W')
+                {
+                    red_pieces[this_index].makeMove(new_row, new_col);
+                    other_index = indexFinder(white_pieces, 'W', old_row - 1, old_col);
+                    modifyPieces(white_pieces, other_index, 'W');
+                    board[old_row][old_col].setContainingValue(' ');
+                    board[old_row - 1][old_col].setContainingValue(' ');
+                    board[new_row][new_col].setContainingValue(player);
+                }
+
+                else
+                {
+                    Piece::inJump = false;
+                    board[new_row][new_col].setContainingValue(' ');
+                    cout << "Invalid Move! You Must Jump!\n";
+                }
+            }
+
+            else
+            {
+                Piece::inJump = false;
+                board[new_row][new_col].setContainingValue(' ');
+                cout << "Invalid Move! You Must Jump!\n";
+            }
+        }
+        
     }
-    else
+
+    else // WHITE PLAYER
     {
-        switch (piece_selector)
+        if(!white_pieces[this_index].getIsKing())
         {
-        case 1:
-            if(board[row + 1][col - 1].getContainingValue() == 'R')
+            if(old_row - 2 == new_row)
             {
-                index = indexFinder(white_pieces, player, row + 2, col - 2);
-                white_pieces[index].makeMove(row, col);
-                index = indexFinder(red_pieces, 'R', row + 1, col - 1);
-                modifyPieces(red_pieces, index, 'R');
-                board[row + 2][col - 2].setContainingValue(' ');
-                board[row + 1][col - 1].setContainingValue(' ');
-            }
-            else if(board[row + 1][col].getContainingValue() == 'R')
-            {
-                index = indexFinder(white_pieces, player, row + 2, col);
-                if(white_pieces[index].getIsKing())
+                if(old_col + 2 == new_col && board[old_row - 1][old_col + 1].getContainingValue() == 'R')
                 {
-                    white_pieces[index].makeMove(row, col);
-                    index = indexFinder(red_pieces, 'R', row + 1, col);
-                    modifyPieces(red_pieces, index, 'R');
-                    board[row + 2][col].setContainingValue(' ');
-                    board[row + 1][col].setContainingValue(' ');
+                    white_pieces[this_index].makeMove(new_row, new_col);
+                    other_index = indexFinder(red_pieces, 'R', old_row - 1, old_col + 1);
+                    modifyPieces(red_pieces, other_index, 'R');
+                    board[old_row][old_col].setContainingValue(' ');
+                    board[old_row - 1][old_col + 1].setContainingValue(' ');
+                    board[new_row][new_col].setContainingValue(player);
                 }
-                else if(board[row + 1][col + 1].getContainingValue() == 'R')
+                else if(old_col - 2 == new_col && board[old_row - 1][old_col - 1].getContainingValue() == 'R')
                 {
-                    index = indexFinder(white_pieces, player, row + 2, col + 2);
-                    white_pieces[index].makeMove(row, col);
-                    index = indexFinder(red_pieces, 'R', row + 1, col + 1);
-                    modifyPieces(red_pieces, index, 'R');
-                    board[row + 2][col + 2].setContainingValue(' ');
-                    board[row + 1][col + 1].setContainingValue(' ');
+                    white_pieces[this_index].makeMove(new_row, new_col);
+                    other_index = indexFinder(red_pieces, 'R', old_row - 1, old_col - 1);
+                    modifyPieces(red_pieces, other_index, 'R');
+                    board[old_row][old_col].setContainingValue(' ');
+                    board[old_row - 1][old_col - 1].setContainingValue(' ');
+                    board[new_row][new_col].setContainingValue(player);
                 }
                 else
                 {
-                    board[row][col].setContainingValue(' ');
-                    cout << "Invalid choice!\n";
+                    Piece::inJump = false;
+                    board[new_row][new_col].setContainingValue(' ');
+                    cout << "Invalid Move! You Must Jump!\n";
                 }
-                
-            }
-
-            else if(board[row + 1][col + 1].getContainingValue() == 'R')
-            {
-                index = indexFinder(white_pieces, player, row + 2, col + 2);
-                white_pieces[index].makeMove(row, col);
-                index = indexFinder(red_pieces, 'R', row + 1, col + 1);
-                modifyPieces(red_pieces, index, 'R');
-                board[row + 2][col + 2].setContainingValue(' ');
-                board[row + 1][col + 1].setContainingValue(' ');
             }
             else
             {
-                board[row][col].setContainingValue(' ');
-                cout << "Invalid choice!\n";
+                Piece::inJump = false;
+                board[new_row][new_col].setContainingValue(' ');
+                cout << "Invalid Move! You Must Jump!\n";
             }
-            break;
-
-        case 2:
-            
-            if(board[row + 2][col - 2].getContainingValue() == player && board[row + 2][col].getContainingValue() == player && board[row + 1][col].getContainingValue() == 'R')
-            {
-                index = indexFinder(white_pieces, player, row + 2, col);
-                if(white_pieces[index].getIsKing())
-                {
-                    white_pieces[index].makeMove(row, col);
-                    index = indexFinder(red_pieces, 'R', row + 1, col);
-                    modifyPieces(red_pieces, index, 'R');
-                    board[row + 2][col].setContainingValue(' ');
-                    board[row + 1][col].setContainingValue(' ');
-                }
-                else if(board[row + 2][col - 2].getContainingValue() == player && board[row + 2][col + 2].getContainingValue() == player && board[row + 1][col + 1].getContainingValue() == 'R')
-                {
-                    index = indexFinder(white_pieces, player, row + 2, col + 2);
-                    white_pieces[index].makeMove(row, col);
-                    index = indexFinder(red_pieces, 'R', row + 1, col + 1);
-                    modifyPieces(red_pieces, index, 'R');
-                    board[row + 2][col + 2].setContainingValue(' ');
-                    board[row + 1][col + 1].setContainingValue(' ');
-                }
-                else
-                {
-                    board[row][col].setContainingValue(' ');
-                    cout << "Invalid choice!\n";
-                }
-            }
-            else if(board[row + 2][col - 2].getContainingValue() == player && board[row + 2][col + 2].getContainingValue() == player && board[row + 1][col + 1].getContainingValue() == 'R')
-            {
-                index = indexFinder(white_pieces, player, row + 2, col + 2);
-                white_pieces[index].makeMove(row, col);
-                index = indexFinder(red_pieces, 'R', row + 1, col + 1);
-                modifyPieces(red_pieces, index, 'R');
-                board[row + 2][col + 2].setContainingValue(' ');
-                board[row + 1][col + 1].setContainingValue(' ');
-            }
-            
-            else if(board[row + 2][col].getContainingValue() == player && board[row + 2][col + 2].getContainingValue() == player && board[row + 1][col + 1].getContainingValue() == 'R')
-            {
-                index = indexFinder(white_pieces, player, row + 2, col + 2);
-                white_pieces[index].makeMove(row, col);
-                index = indexFinder(red_pieces, 'R', row + 1, col + 1);
-                modifyPieces(red_pieces, index, 'R');
-                board[row + 2][col + 2].setContainingValue(' ');
-                board[row + 1][col + 1].setContainingValue(' ');
-            }
-            else
-            {
-                board[row][col].setContainingValue(' ');
-                cout << "Invalid choice!\n";
-            }
-
-            break;
-        default:
-            break;
         }
-    }    
+        else // WHITE KING
+        {
+            if(old_row + 2 == new_row)
+            {
+                if(old_col + 2 == new_col && board[old_row + 1][old_col + 1].getContainingValue() == 'R')
+                {
+                    white_pieces[this_index].makeMove(new_row, new_col);
+                    other_index = indexFinder(red_pieces, 'R', old_row + 1, old_col + 1);
+                    modifyPieces(red_pieces, other_index, 'R');
+                    board[old_row][old_col].setContainingValue(' ');
+                    board[old_row + 1][old_col + 1].setContainingValue(' ');
+                    board[new_row][new_col].setContainingValue(player);
+                }
+                else if(old_col - 2 == new_col && board[old_row + 1][old_col - 1].getContainingValue() == 'R')
+                {
+                    white_pieces[this_index].makeMove(new_row, new_col);
+                    other_index = indexFinder(red_pieces, 'R', old_row + 1, old_col - 1);
+                    modifyPieces(red_pieces, other_index, 'R');
+                    board[old_row][old_col].setContainingValue(' ');
+                    board[old_row + 1][old_col - 1].setContainingValue(' ');
+                    board[new_row][new_col].setContainingValue(player);
+                }
+                else if(old_col == new_col && board[old_row + 1][old_col].getContainingValue() == 'R')
+                {
+                    white_pieces[this_index].makeMove(new_row, new_col);
+                    other_index = indexFinder(red_pieces, 'R', old_row + 1, old_col);
+                    modifyPieces(red_pieces, other_index, 'R');
+                    board[old_row][old_col].setContainingValue(' ');
+                    board[old_row + 1][old_col].setContainingValue(' ');
+                    board[new_row][new_col].setContainingValue(player);
+                }
+
+                else
+                {
+                    Piece::inJump = false;
+                    board[new_row][new_col].setContainingValue(' ');
+                    cout << "Invalid Move! You Must Jump!\n";
+                }
+            } 
+
+            else if(old_row - 2 == new_row)
+            {
+                if(old_col + 2 == new_col && board[old_row - 1][old_col + 1].getContainingValue() == 'R')
+                {
+                    white_pieces[this_index].makeMove(new_row, new_col);
+                    other_index = indexFinder(red_pieces, 'R', old_row - 1, old_col + 1);
+                    modifyPieces(red_pieces, other_index, 'R');
+                    board[old_row][old_col].setContainingValue(' ');
+                    board[old_row - 1][old_col + 1].setContainingValue(' ');
+                    board[new_row][new_col].setContainingValue(player);
+                }
+                else if(old_col - 2 == new_col && board[old_row - 1][old_col - 1].getContainingValue() == 'R')
+                {
+                    white_pieces[this_index].makeMove(new_row, new_col);
+                    other_index = indexFinder(red_pieces, 'R', old_row - 1, old_col - 1);
+                    modifyPieces(red_pieces, other_index, 'R');
+                    board[old_row][old_col].setContainingValue(' ');
+                    board[old_row - 1][old_col - 1].setContainingValue(' ');
+                    board[new_row][new_col].setContainingValue(player);
+                }
+                else if(old_col == new_col && board[old_row - 1][old_col].getContainingValue() == 'R')
+                {
+                    white_pieces[this_index].makeMove(new_row, new_col);
+                    other_index = indexFinder(red_pieces, 'R', old_row - 1, old_col);
+                    modifyPieces(red_pieces, other_index, 'R');
+                    board[old_row][old_col].setContainingValue(' ');
+                    board[old_row - 1][old_col].setContainingValue(' ');
+                    board[new_row][new_col].setContainingValue(player);
+                }
+
+                else
+                {
+                    Piece::inJump = false;
+                    board[new_row][new_col].setContainingValue(' ');
+                    cout << "Invalid Move! You Must Jump!\n";
+                }
+            }
+
+            else
+            {
+                Piece::inJump = false;
+                board[new_row][new_col].setContainingValue(' ');
+                cout << "Invalid Move! You Must Jump!\n";
+            }
+        }
+        
+    }
+    
 }
 
 void modifyPieces(Piece *&pieces, int ignorePiece, char player)
