@@ -48,8 +48,11 @@ public:
     void validateMoves(Position board[8][8]);
     void makeMove(int row, int col)
     {
-        this -> row = row;
-        this -> column = col;
+        if((row < 8 && row >= 0) && (col < 8 && col >= 0))
+        {
+            this -> row = row;
+            this -> column = col;
+        }
 
         if(row == 0 && player == 'W')
             isKing = true;
@@ -112,7 +115,7 @@ void Piece::validateMoves(Position board[8][8])
     cout << "Status: " << (isKing ? "King":"Not a King") << endl;
     cout << "Possible Moves: ";
 
-    // int move_choice = 48; // AscII encoding of 0;
+    
     if(player == 'R') // PLAYER IS RED
     {
         if(!isKing)
@@ -145,7 +148,7 @@ void Piece::validateMoves(Position board[8][8])
                     board[row + 1][column + 1].setContainingValue(move_choice);
                     cout << (char)move_choice << ", ";
                 }
-                if (board[row + 1][column - 1].getContainingValue() == ' ' && (column - 1) >= 0 && (row + 1) < 8)
+                if (board[row + 1][column - 1].getContainingValue() == ' ' && (column - 1 >= 0) && (row + 1 < 8))
                 {
                     move_choice++;
                     board[row + 1][column - 1].setContainingValue(move_choice);
@@ -174,13 +177,10 @@ void Piece::validateMoves(Position board[8][8])
             {
                 if((board[row + 2][column].getContainingValue() == ' ' || (board[row + 2][column].getContainingValue() != 'W' && board[row + 2][column].getContainingValue() != player)) && (row + 2 < 8))
                 {   
-                    cout << "THOS CALLED\n";
-                    cout << "move_choice: " << Piece::move_choice << endl;
                     move_choice++;
                     board[row + 2][column].setContainingValue(move_choice);
                     cout << (char)move_choice << ", ";
                     inJump = true;
-                    cout << "Value of inJump: " << inJump << endl;
                 }
 
             }
@@ -231,7 +231,7 @@ void Piece::validateMoves(Position board[8][8])
 
             if(!inJump)
             {
-                if (board[row + 1][column - 1].getContainingValue() == ' ' && (column - 1 >= 0) && (row + 1) < 8)
+                if (board[row + 1][column - 1].getContainingValue() == ' ' && (column - 1 >= 0) && (row + 1 < 8))
                 {
                     move_choice++;
                     board[row + 1][column - 1].setContainingValue(move_choice);
@@ -274,7 +274,7 @@ void Piece::validateMoves(Position board[8][8])
     {
         if(!isKing)
         {   
-            if (board[row - 1][column + 1].getContainingValue() == 'R')
+            if (board[row - 1][column + 1].getContainingValue() == 'R' && (column + 1 < 8) && (row - 1 >= 0))
             {
                 if((board[row - 2][column + 2].getContainingValue() == ' ' || (board[row - 2][column + 2].getContainingValue() != 'R' && board[row - 2][column + 2].getContainingValue() != player)) && (column + 2 < 8) && (row - 2 >= 0))
                 {   
@@ -302,7 +302,7 @@ void Piece::validateMoves(Position board[8][8])
                     board[row - 1][column + 1].setContainingValue(move_choice);
                     cout << (char)move_choice << ", ";
                 }
-                if (board[row - 1][column - 1].getContainingValue() == ' ' && (column - 1) >= 0 && (row - 1) < 8)
+                if (board[row - 1][column - 1].getContainingValue() == ' ' && (column - 1 >= 0) && (row - 1 >= 0))
                 {
                     move_choice++;
                     board[row - 1][column - 1].setContainingValue(move_choice);
@@ -328,13 +328,10 @@ void Piece::validateMoves(Position board[8][8])
             {
                 if((board[row + 2][column].getContainingValue() == ' ' || (board[row + 2][column].getContainingValue() != 'R' && board[row + 2][column].getContainingValue() != player)) && (row + 2 < 8))
                 {   
-                    cout << "THOS CALLED\n";
-                    cout << "move_choice: " << Piece::move_choice << endl;
                     move_choice++;
                     board[row + 2][column].setContainingValue(move_choice);
                     cout << (char)move_choice << ", ";
                     inJump = true;
-                    cout << "Value of inJump: " << inJump << endl;
                 }
 
             }
@@ -385,7 +382,7 @@ void Piece::validateMoves(Position board[8][8])
 
             if(!inJump)
             {
-                if (board[row + 1][column - 1].getContainingValue() == ' ' && (column - 1 >= 0) && (row + 1) < 8)
+                if (board[row + 1][column - 1].getContainingValue() == ' ' && (column - 1 >= 0) && (row + 1 < 8))
                 {
                     move_choice++;
                     board[row + 1][column - 1].setContainingValue(move_choice);
@@ -430,7 +427,7 @@ void Piece::validateMoves(Position board[8][8])
 
 
 
-int Piece::move_choice = 48;
+int Piece::move_choice = 96;
 bool Piece::inJump = false;
 int numOfReds = 12, numOfWhites = 12;
 
@@ -439,7 +436,6 @@ void board_init(Position board[8][8]);
 void player_init(Piece[], Position board[8][8], char);
 void renderBoard(Position board[8][8]);
 void theGame();
-void playeronemoves(Piece red_pieces[12], Position board[8][8]);
 void makeMove(Piece *&, Piece *&, Position board[8][8], char);
 int indexFinder(Piece *&, char, int, int);
 void positionUpdater(Piece *&, Position board[8][8], char, int, int, int, int, int);
@@ -450,10 +446,6 @@ void modifyPieces(Piece *&, int, char);
 int main()
 {
     theGame();
-    int s = 13;
-    int x = s % 10;
-    s/=10;
-    cout << s;
 
     return 0;
 }
@@ -533,22 +525,21 @@ void theGame()
     bool gameCompelete = false, isPlayerOne = true, jumpChecked = false;
     Piece *red_pieces = new Piece[numOfReds];
     Piece *white_pieces = new Piece[numOfWhites];
+    char choice;
 
     board_init(board);
     player_init(red_pieces, board, 'R');
     player_init(white_pieces, board, 'W');
-    // red_pieces[9].setIsKing(); REMOVE THIS SKOPJSJO
     renderBoard(board);
     while (!gameCompelete)
     {   
-        if (isPlayerOne)
+        if (isPlayerOne) // RED TURN
         {
 
-            cout << endl << "Red: " << numOfReds << endl;
+            cout << endl << "RED: " << numOfReds << endl;
             for(int i = 0; i < numOfReds; i++)
             {   
-                // cout << "i: "<< i << endl;
-                // cout << "move_choice: " << Piece::move_choice << endl;3
+
                 red_pieces[i].validateMoves(board);
                 cout << endl << endl;
                 if(Piece::inJump && !jumpChecked)
@@ -559,18 +550,63 @@ void theGame()
                 }
 
             }
-            Piece::move_choice = 48;
+
+            if(numOfReds < 5 && numOfWhites > numOfReds)
+            {
+                cout << "Would you like to resign? Enter y/Y for YES or any character for NO: ";
+                cin >> choice, cout << endl;
+
+                if(choice == 'Y' || choice == 'y')
+                {
+                    gameCompelete = true;
+                    cout << "PLAYER WHITE WON THE GAME, YOU LOST!\n";
+                    break;
+                }
+                else
+                    cout << "CONTINUE WITH THE GAME\n";
+            }
+
+
+            else if(numOfReds < 5 && numOfReds == numOfWhites)
+            {
+                cout << "Would you like to agree for a draw? Enter y/Y for YES or any character for NO: ";
+                cin >> choice, cout << endl;
+
+                if(choice == 'Y' || choice == 'y')
+                {
+                    cout << "Player RED wants to agree for a draw, would like to agree?: Enter y/Y for YES or any character for NO: ";
+                    cin >> choice, cout << endl;
+                    if(choice == 'Y' || choice == 'y')
+                    {
+                        gameCompelete = true;
+                        cout << "RED AND WHITE HAVE AGREED FOR A DRAW!\n";
+                        break;
+                    }
+                    else
+                        cout << "PLAYER WHITE DOES NOT AGREE FOR A DRAW, CONTINUE WITH THE GAME\n";
+                }
+                else
+                    cout << "CONTINUE WITH THE GAME\n";
+            }
+            else if(Piece::move_choice == 96 || numOfReds == 0)
+            {
+                cout << "PLAYER WHITE WON THE GAME, YOU LOST!\n";
+                gameCompelete = true;
+                break;
+            }
+
+            Piece::move_choice = 96;
             renderBoard(board);
+            cout << endl << "RED: " << numOfReds << endl << endl;
             makeMove(red_pieces, white_pieces, board, 'R');
-            renderBoard(board);
             jumpChecked = false;
             isPlayerOne = false;
 
         }
 
-        else
+        else // WHITE TURN
         {
-            cout << endl << "White: " << numOfWhites << endl;
+            cout << endl << "WHITE: " << numOfWhites << endl;
             for(int i = 0; i < numOfWhites; i++)
             {
                 white_pieces[i].validateMoves(board);
@@ -581,10 +617,55 @@ void theGame()
                     jumpChecked = true;
                 }
             }
-            Piece::move_choice = 48;
+
+            if(numOfWhites < 5 && numOfReds > numOfWhites)
+            {
+                cout << "Would you like to resign? Enter y/Y for YES or any character for NO: ";
+                cin >> choice, cout << endl;
+
+                if(choice == 'Y' || choice == 'y')
+                {
+                    gameCompelete = true;
+                    cout << "PLAYER RED WON THE GAME, YOU LOST!\n";
+                    break;
+                }
+                else
+                    cout << "CONTINUE WITH THE GAME\n";
+            }
+
+
+            else if(numOfWhites < 5 && numOfReds == numOfWhites)
+            {
+                cout << "Would you like to agree for a draw? Enter y/Y for YES or any character for NO: ";
+                cin >> choice, cout << endl;
+
+                if(choice == 'Y' || choice == 'y')
+                {
+                    cout << "Player WHITE wants to agree for a draw, would like to agree?: Enter y/Y for YES or any character for NO: ";
+                    cin >> choice, cout << endl;
+                    if(choice == 'Y' || choice == 'y')
+                    {
+                        gameCompelete = true;
+                        cout << "RED AND WHITE HAVE AGREED FOR A DRAW!\n";
+                        break;
+                    }
+                    else
+                        cout << "PLAYER RED DOES NOT AGREE FOR A DRAW, CONTINUE WITH THE GAME\n";
+                }
+                else
+                    cout << "CONTINUE WITH THE GAME\n";
+            }
+            else if(Piece::move_choice == 96 || numOfWhites == 0)
+            {
+                cout << "PLAYER RED WON THE GAME, YOU LOST!\n";
+                gameCompelete = true;
+                break;
+            } 
+
+            Piece::move_choice = 96;
             renderBoard(board);
+            cout << endl << "WHITE: " << numOfWhites << endl << endl;
             makeMove(red_pieces, white_pieces, board, 'W');
-            renderBoard(board);
             isPlayerOne = true;
             jumpChecked = false;
         }
@@ -618,56 +699,10 @@ void renderBoard(Position board[8][8])
     }
 }
 
-void playeronemoves(Piece red_pieces[12], Position board[8][8])
-{
-    Piece Move[36];
-    Piece old[36];
-   
-    int move_choice = 48; // AscII encoding of 0;
-    int c = 0;
-    for (int i = 0;i < 12;i++)
-    {
-        
-        if (board[red_pieces[i].getrow() + 1][red_pieces[i].getcolumn() + 1].getContainingValue() == ' ' && (red_pieces[i].getcolumn() + 1) < 8 && (red_pieces[i].getrow() + 1) < 8)
-        {
-            
-     
-            move_choice++;
-            c++;
-            board[red_pieces[i].getrow() + 1][red_pieces[i].getcolumn() + 1].setContainingValue(move_choice);
-            cout << "Possible Option:  row:" << red_pieces[i].getrow() + 1 << "  column:  " << red_pieces[i].getcolumn() + 1 << endl;
-            old[c].setrow(red_pieces[i].getrow()) ;
-            old[c].setcolumn(red_pieces[i].getcolumn()) ;
-            Move[c].setrow(red_pieces[i].getrow() + 1)  ;
-            Move[c].setcolumn(red_pieces[i].getcolumn() + 1)  ;
-        }
-        if (board[red_pieces[i].getrow() + 1][red_pieces[i].getcolumn() - 1].getContainingValue() == ' ' && (red_pieces[i].getcolumn() - 1) >= 0 && (red_pieces[i].getrow() + 1) < 8)
-        {
-            move_choice++;
-            c++;
-            board[red_pieces[i].getrow() + 1][red_pieces[i].getcolumn() - 1].setContainingValue(move_choice);
-            cout << "Possible Option:  row:" << red_pieces[i].getrow() + 1 << "  column:  " << red_pieces[i].getcolumn() - 1 << endl;
-            old[c].setrow(red_pieces[i].getrow())  ;
-            old[c].setcolumn(red_pieces[i].getcolumn())  ;
-            Move[c].setrow(red_pieces[i].getrow() + 1) ;
-            Move[c].setcolumn(red_pieces[i].getcolumn() - 1) ;
-        }
-    }
-    renderBoard(board);
-    int option;
-    cout << "Enter where you want to move:  ";
-    cin >> option;
-    int total = c;
-            board[old[option].getrow()][old[option].getcolumn()].setContainingValue(' ');
-            board[Move[option].getrow()][Move[option].getcolumn()].setContainingValue('R');
-            
-           
-
-    }
-
 void makeMove(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], char player)
 {
-    int row_choice, col_choice, move_choice, index;
+    int row_choice, col_choice, index;
+    char move_choice;
     bool correctPiece = false;
 
     while(!correctPiece)
@@ -685,7 +720,7 @@ void makeMove(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
     {
         for(int col = 0; col < 8; col++)
         {
-            if(board[row][col].getContainingValue() == move_choice + '0')
+            if(board[row][col].getContainingValue() == move_choice)
             {
                 if(!Piece::inJump)
                 {
@@ -715,7 +750,6 @@ void makeMove(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
             }
             else if(row == 7 && col == 7)
             {
-                cout << "Invalid Move!\n";
                 Piece::inJump = false;
                 board[row][col].afterMoveCleaner();
             }
@@ -1139,17 +1173,20 @@ void modifyPieces(Piece *&pieces, int ignorePiece, char player)
     
     for(int i = 0, j = 0; j < numOfPieces + 1; i++, j++)
     {
-        cout << ignorePiece << endl;
         if(j == ignorePiece)
         {
             i--;
             continue;
         }
         else
+        {
             temp[i] = pieces[j];
+        }
     }
+    
+    pieces = NULL;
+    delete[] pieces;
     pieces = temp;
-    delete[] temp;
     Piece::inJump = false;
 
 }
