@@ -437,6 +437,7 @@ void player_init(Piece[], Position board[8][8], char);
 void renderBoard(Position board[8][8]);
 void theGame();
 void makeMove(Piece *&, Piece *&, Position board[8][8], char);
+void multipleJump(Piece *&, Piece *&, Position board[8][8], char, int);
 int indexFinder(Piece *&, char, int, int);
 void positionUpdater(Piece *&, Position board[8][8], char, int, int, int, int, int);
 void makeJump(Piece *&, Piece *&, Position board[8][8], char, int, int, int, int, int);
@@ -921,6 +922,7 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                     board[old_row][old_col].setContainingValue(' ');
                     board[old_row + 1][old_col + 1].setContainingValue(' ');
                     board[new_row][new_col].setContainingValue(player);
+                    multipleJump(red_pieces, white_pieces, board, player, this_index);
                 }
                 else if(old_col - 2 == new_col && board[old_row + 1][old_col - 1].getContainingValue() == 'W')
                 {
@@ -930,6 +932,7 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                     board[old_row][old_col].setContainingValue(' ');
                     board[old_row + 1][old_col - 1].setContainingValue(' ');
                     board[new_row][new_col].setContainingValue(player);
+                    multipleJump(red_pieces, white_pieces, board, player, this_index);
                 }
                 else
                 {
@@ -957,6 +960,7 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                     board[old_row][old_col].setContainingValue(' ');
                     board[old_row + 1][old_col + 1].setContainingValue(' ');
                     board[new_row][new_col].setContainingValue(player);
+                    multipleJump(red_pieces, white_pieces, board, player, this_index);
                 }
                 else if(old_col - 2 == new_col && board[old_row + 1][old_col - 1].getContainingValue() == 'W')
                 {
@@ -966,6 +970,7 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                     board[old_row][old_col].setContainingValue(' ');
                     board[old_row + 1][old_col - 1].setContainingValue(' ');
                     board[new_row][new_col].setContainingValue(player);
+                    multipleJump(red_pieces, white_pieces, board, player, this_index);
                 }
                 else if(old_col == new_col && board[old_row + 1][old_col].getContainingValue() == 'W')
                 {
@@ -975,6 +980,7 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                     board[old_row][old_col].setContainingValue(' ');
                     board[old_row + 1][old_col].setContainingValue(' ');
                     board[new_row][new_col].setContainingValue(player);
+                    multipleJump(red_pieces, white_pieces, board, player, this_index);
                 }
 
                 else
@@ -995,6 +1001,7 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                     board[old_row][old_col].setContainingValue(' ');
                     board[old_row - 1][old_col + 1].setContainingValue(' ');
                     board[new_row][new_col].setContainingValue(player);
+                    multipleJump(red_pieces, white_pieces, board, player, this_index);
                 }
                 else if(old_col - 2 == new_col && board[old_row - 1][old_col - 1].getContainingValue() == 'W')
                 {
@@ -1004,6 +1011,7 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                     board[old_row][old_col].setContainingValue(' ');
                     board[old_row - 1][old_col - 1].setContainingValue(' ');
                     board[new_row][new_col].setContainingValue(player);
+                    multipleJump(red_pieces, white_pieces, board, player, this_index);
                 }
                 else if(old_col == new_col && board[old_row - 1][old_col].getContainingValue() == 'W')
                 {
@@ -1013,6 +1021,7 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                     board[old_row][old_col].setContainingValue(' ');
                     board[old_row - 1][old_col].setContainingValue(' ');
                     board[new_row][new_col].setContainingValue(player);
+                    multipleJump(red_pieces, white_pieces, board, player, this_index);
                 }
 
                 else
@@ -1047,6 +1056,7 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                     board[old_row][old_col].setContainingValue(' ');
                     board[old_row - 1][old_col + 1].setContainingValue(' ');
                     board[new_row][new_col].setContainingValue(player);
+                    multipleJump(red_pieces, white_pieces, board, player, this_index);
                 }
                 else if(old_col - 2 == new_col && board[old_row - 1][old_col - 1].getContainingValue() == 'R')
                 {
@@ -1056,6 +1066,7 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                     board[old_row][old_col].setContainingValue(' ');
                     board[old_row - 1][old_col - 1].setContainingValue(' ');
                     board[new_row][new_col].setContainingValue(player);
+                    multipleJump(red_pieces, white_pieces, board, player, this_index);
                 }
                 else
                 {
@@ -1083,6 +1094,7 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                     board[old_row][old_col].setContainingValue(' ');
                     board[old_row + 1][old_col + 1].setContainingValue(' ');
                     board[new_row][new_col].setContainingValue(player);
+                    multipleJump(red_pieces, white_pieces, board, player, this_index);
                 }
                 else if(old_col - 2 == new_col && board[old_row + 1][old_col - 1].getContainingValue() == 'R')
                 {
@@ -1092,6 +1104,7 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                     board[old_row][old_col].setContainingValue(' ');
                     board[old_row + 1][old_col - 1].setContainingValue(' ');
                     board[new_row][new_col].setContainingValue(player);
+                    multipleJump(red_pieces, white_pieces, board, player, this_index);
                 }
                 else if(old_col == new_col && board[old_row + 1][old_col].getContainingValue() == 'R')
                 {
@@ -1101,6 +1114,7 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                     board[old_row][old_col].setContainingValue(' ');
                     board[old_row + 1][old_col].setContainingValue(' ');
                     board[new_row][new_col].setContainingValue(player);
+                    multipleJump(red_pieces, white_pieces, board, player, this_index);
                 }
 
                 else
@@ -1121,6 +1135,7 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                     board[old_row][old_col].setContainingValue(' ');
                     board[old_row - 1][old_col + 1].setContainingValue(' ');
                     board[new_row][new_col].setContainingValue(player);
+                    multipleJump(red_pieces, white_pieces, board, player, this_index);
                 }
                 else if(old_col - 2 == new_col && board[old_row - 1][old_col - 1].getContainingValue() == 'R')
                 {
@@ -1130,6 +1145,7 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                     board[old_row][old_col].setContainingValue(' ');
                     board[old_row - 1][old_col - 1].setContainingValue(' ');
                     board[new_row][new_col].setContainingValue(player);
+                    multipleJump(red_pieces, white_pieces, board, player, this_index);
                 }
                 else if(old_col == new_col && board[old_row - 1][old_col].getContainingValue() == 'R')
                 {
@@ -1139,6 +1155,7 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                     board[old_row][old_col].setContainingValue(' ');
                     board[old_row - 1][old_col].setContainingValue(' ');
                     board[new_row][new_col].setContainingValue(player);
+                    multipleJump(red_pieces, white_pieces, board, player, this_index);
                 }
 
                 else
@@ -1157,6 +1174,56 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
             }
         }
         
+    }
+    
+}
+
+void multipleJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], char player, int index)
+{
+    Piece::inJump = false;
+    if(player == 'R')
+    {
+        Piece::move_choice = 96;
+        red_pieces[index].validateMoves(board);
+        if(Piece::inJump)
+        {
+            renderBoard(board);
+            cout << endl << "RED: " << numOfReds << endl << endl;
+            makeMove(red_pieces, white_pieces, board, player);
+        }
+        else
+        {
+            for(int row = 0; row < 8; row++)
+            {
+                for(int col = 0; col < 8; col++)
+                {
+                    board[row][col].afterMoveCleaner();
+                }
+            }
+        }
+        
+    }
+
+    else
+    {
+        Piece::move_choice = 96;
+        white_pieces[index].validateMoves(board);
+        if(Piece::inJump)
+        {
+            renderBoard(board);
+            cout << endl << "WHITE: " << numOfWhites << endl << endl;
+            makeMove(red_pieces, white_pieces, board, player);
+        }
+        else
+        {
+            for(int row = 0; row < 8; row++)
+            {
+                for(int col = 0; col < 8; col++)
+                {
+                    board[row][col].afterMoveCleaner();
+                }
+            }
+        }
     }
     
 }
@@ -1187,6 +1254,6 @@ void modifyPieces(Piece *&pieces, int ignorePiece, char player)
     pieces = NULL;
     delete[] pieces;
     pieces = temp;
-    Piece::inJump = false;
+    // Piece::inJump = false;
 
 }
