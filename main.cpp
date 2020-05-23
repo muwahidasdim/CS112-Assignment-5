@@ -1,4 +1,11 @@
 #include <iostream>
+#include <string>
+#include <ctime>
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <unistd.h>
+#endif
 using namespace std;
 class Position;
 class Piece
@@ -38,7 +45,7 @@ public:
 
     void setIsKing()
     {
-        isKing = true; 
+        isKing = true;
     }
     bool getIsKing()
     {
@@ -48,17 +55,18 @@ public:
     void validateMoves(Position board[8][8]);
     void makeMove(int row, int col)
     {
-        if((row < 8 && row >= 0) && (col < 8 && col >= 0))
+        if ((row < 8 && row >= 0) && (col < 8 && col >= 0))
         {
-            this -> row = row;
-            this -> column = col;
+            this->row = row;
+            this->column = col;
         }
 
-        if(row == 0 && player == 'W')
+        if (row == 0 && player == 'W')
             isKing = true;
-        else if(row == 7 && player == 'R')
+        else if (row == 7 && player == 'R')
             isKing = true;
     }
+    
 
 };
 
@@ -103,26 +111,27 @@ public:
 
     void afterMoveCleaner()
     {
-        if(containingValue != 'R' && containingValue != 'W')
+        if (containingValue != 'R' && containingValue != 'W')
             containingValue = ' ';
     }
+   
 
 };
 
 void Piece::validateMoves(Position board[8][8])
 {
     cout << "Row: " << row << '\t' << "Column: " << column << endl;
-    cout << "Status: " << (isKing ? "King":"Not a King") << endl;
+    cout << "Status: " << (isKing ? "King" : "Not a King") << endl;
     cout << "Possible Moves: ";
 
-    
-    if(player == 'R') // PLAYER IS RED
+
+    if (player == 'R') // PLAYER IS RED
     {
-        if(!isKing)
-        {   
+        if (!isKing)
+        {
             if (board[row + 1][column + 1].getContainingValue() == 'W' && (column + 1 < 8) && (row + 1 < 8))
             {
-                if((board[row + 2][column + 2].getContainingValue() == ' ' || (board[row + 2][column + 2].getContainingValue() != 'W' && board[row + 2][column + 2].getContainingValue() != player)) && (column + 2 < 8) && (row + 2 < 8))
+                if ((board[row + 2][column + 2].getContainingValue() == ' ' || (board[row + 2][column + 2].getContainingValue() != 'W' && board[row + 2][column + 2].getContainingValue() != player)) && (column + 2 < 8) && (row + 2 < 8))
                 {
                     move_choice++;
                     board[row + 2][column + 2].setContainingValue(move_choice);
@@ -132,7 +141,7 @@ void Piece::validateMoves(Position board[8][8])
             }
             if ((board[row + 1][column - 1].getContainingValue() == 'W') && (column - 1 >= 0) && (row + 1 < 8))
             {
-                if((board[row + 2][column - 2].getContainingValue() == ' ' || (board[row + 2][column - 2].getContainingValue() != 'W' && board[row + 2][column - 2].getContainingValue() != player)) && (column - 2 >= 0) && (row + 2 < 8))
+                if ((board[row + 2][column - 2].getContainingValue() == ' ' || (board[row + 2][column - 2].getContainingValue() != 'W' && board[row + 2][column - 2].getContainingValue() != player)) && (column - 2 >= 0) && (row + 2 < 8))
                 {
                     move_choice++;
                     board[row + 2][column - 2].setContainingValue(move_choice);
@@ -140,7 +149,7 @@ void Piece::validateMoves(Position board[8][8])
                     inJump = true;
                 }
             }
-            if(!inJump)
+            if (!inJump)
             {
                 if ((board[row + 1][column + 1].getContainingValue() == ' ') && (column + 1 < 8) && (row + 1 < 8))
                 {
@@ -155,9 +164,9 @@ void Piece::validateMoves(Position board[8][8])
                     cout << (char)move_choice << ", ";
                 }
             }
-      
 
-            
+
+
 
         }
 
@@ -165,7 +174,7 @@ void Piece::validateMoves(Position board[8][8])
         {
             if (board[row + 1][column + 1].getContainingValue() == 'W' && (column + 1 < 8) && (row + 1 < 8))
             {
-                if((board[row + 2][column + 2].getContainingValue() == ' ' || (board[row + 2][column + 2].getContainingValue() != 'W' && board[row + 2][column + 2].getContainingValue() != player)) && (column + 2 < 8) && (row + 2 < 8))
+                if ((board[row + 2][column + 2].getContainingValue() == ' ' || (board[row + 2][column + 2].getContainingValue() != 'W' && board[row + 2][column + 2].getContainingValue() != player)) && (column + 2 < 8) && (row + 2 < 8))
                 {
                     move_choice++;
                     board[row + 2][column + 2].setContainingValue(move_choice);
@@ -173,10 +182,10 @@ void Piece::validateMoves(Position board[8][8])
                     inJump = true;
                 }
             }
-            if((board[row + 1][column].getContainingValue() == 'W') && (row + 1 < 8))
+            if ((board[row + 1][column].getContainingValue() == 'W') && (row + 1 < 8))
             {
-                if((board[row + 2][column].getContainingValue() == ' ' || (board[row + 2][column].getContainingValue() != 'W' && board[row + 2][column].getContainingValue() != player)) && (row + 2 < 8))
-                {   
+                if ((board[row + 2][column].getContainingValue() == ' ' || (board[row + 2][column].getContainingValue() != 'W' && board[row + 2][column].getContainingValue() != player)) && (row + 2 < 8))
+                {
                     move_choice++;
                     board[row + 2][column].setContainingValue(move_choice);
                     cout << (char)move_choice << ", ";
@@ -187,7 +196,7 @@ void Piece::validateMoves(Position board[8][8])
 
             if ((board[row + 1][column - 1].getContainingValue() == 'W') && (column - 1 >= 0) && (row + 1 < 8))
             {
-                if((board[row + 2][column - 2].getContainingValue() == ' ' || (board[row + 2][column - 2].getContainingValue() != 'W' && board[row + 2][column - 2].getContainingValue() != player)) && (column - 2 >= 0) && (row + 2 < 8))
+                if ((board[row + 2][column - 2].getContainingValue() == ' ' || (board[row + 2][column - 2].getContainingValue() != 'W' && board[row + 2][column - 2].getContainingValue() != player)) && (column - 2 >= 0) && (row + 2 < 8))
                 {
                     move_choice++;
                     board[row + 2][column - 2].setContainingValue(move_choice);
@@ -197,7 +206,7 @@ void Piece::validateMoves(Position board[8][8])
             }
             if (board[row - 1][column + 1].getContainingValue() == 'W' && (column + 1 < 8) && (row - 1 >= 0))
             {
-                if((board[row - 2][column + 2].getContainingValue() == ' ' || (board[row - 2][column + 2].getContainingValue() != 'W' && board[row - 2][column + 2].getContainingValue() != player)) && (column + 2 < 8) && (row - 2 >= 0))
+                if ((board[row - 2][column + 2].getContainingValue() == ' ' || (board[row - 2][column + 2].getContainingValue() != 'W' && board[row - 2][column + 2].getContainingValue() != player)) && (column + 2 < 8) && (row - 2 >= 0))
                 {
                     move_choice++;
                     board[row - 2][column + 2].setContainingValue(move_choice);
@@ -205,9 +214,9 @@ void Piece::validateMoves(Position board[8][8])
                     inJump = true;
                 }
             }
-            if((board[row - 1][column].getContainingValue() == 'W') && (row - 1 >= 0))
+            if ((board[row - 1][column].getContainingValue() == 'W') && (row - 1 >= 0))
             {
-                if((board[row - 2][column].getContainingValue() == ' ' || (board[row - 2][column].getContainingValue() != 'W' && board[row - 2][column].getContainingValue() != player)) && (row - 2 >= 0))
+                if ((board[row - 2][column].getContainingValue() == ' ' || (board[row - 2][column].getContainingValue() != 'W' && board[row - 2][column].getContainingValue() != player)) && (row - 2 >= 0))
                 {
                     move_choice++;
                     board[row - 2][column].setContainingValue(move_choice);
@@ -219,7 +228,7 @@ void Piece::validateMoves(Position board[8][8])
 
             if ((board[row - 1][column - 1].getContainingValue() == 'W') && (column - 1 >= 0) && (row - 1 >= 0))
             {
-                if((board[row - 2][column - 2].getContainingValue() == ' ' || (board[row - 2][column - 2].getContainingValue() != 'W' && board[row - 2][column - 2].getContainingValue() != player)) && (column - 2 >= 0) && (row - 2 >= 0))
+                if ((board[row - 2][column - 2].getContainingValue() == ' ' || (board[row - 2][column - 2].getContainingValue() != 'W' && board[row - 2][column - 2].getContainingValue() != player)) && (column - 2 >= 0) && (row - 2 >= 0))
                 {
                     move_choice++;
                     board[row - 2][column - 2].setContainingValue(move_choice);
@@ -229,7 +238,7 @@ void Piece::validateMoves(Position board[8][8])
             }
 
 
-            if(!inJump)
+            if (!inJump)
             {
                 if (board[row + 1][column - 1].getContainingValue() == ' ' && (column - 1 >= 0) && (row + 1 < 8))
                 {
@@ -237,7 +246,7 @@ void Piece::validateMoves(Position board[8][8])
                     board[row + 1][column - 1].setContainingValue(move_choice);
                     cout << (char)move_choice << ", ";
                 }
-                if(board[row + 1][column].getContainingValue() == ' ' && (row + 1 < 8))
+                if (board[row + 1][column].getContainingValue() == ' ' && (row + 1 < 8))
                 {
                     move_choice++;
                     board[row + 1][column].setContainingValue(move_choice);
@@ -255,7 +264,7 @@ void Piece::validateMoves(Position board[8][8])
                     board[row - 1][column + 1].setContainingValue(move_choice);
                     cout << (char)move_choice << ", ";
                 }
-                if(board[row - 1][column].getContainingValue() == ' ' && (row - 1 >= 0))
+                if (board[row - 1][column].getContainingValue() == ' ' && (row - 1 >= 0))
                 {
                     move_choice++;
                     board[row - 1][column].setContainingValue(move_choice);
@@ -272,12 +281,12 @@ void Piece::validateMoves(Position board[8][8])
     }
     else // PLAYER IS WHITE
     {
-        if(!isKing)
-        {   
+        if (!isKing)
+        {
             if (board[row - 1][column + 1].getContainingValue() == 'R' && (column + 1 < 8) && (row - 1 >= 0))
             {
-                if((board[row - 2][column + 2].getContainingValue() == ' ' || (board[row - 2][column + 2].getContainingValue() != 'R' && board[row - 2][column + 2].getContainingValue() != player)) && (column + 2 < 8) && (row - 2 >= 0))
-                {   
+                if ((board[row - 2][column + 2].getContainingValue() == ' ' || (board[row - 2][column + 2].getContainingValue() != 'R' && board[row - 2][column + 2].getContainingValue() != player)) && (column + 2 < 8) && (row - 2 >= 0))
+                {
                     move_choice++;
                     board[row - 2][column + 2].setContainingValue(move_choice);
                     cout << (char)move_choice << ", ";
@@ -286,7 +295,7 @@ void Piece::validateMoves(Position board[8][8])
             }
             if ((board[row - 1][column - 1].getContainingValue() == 'R') && (column - 1 >= 0) && (row - 1 >= 0))
             {
-                if((board[row - 2][column - 2].getContainingValue() == ' ' || (board[row - 2][column - 2].getContainingValue() != 'R' && board[row - 2][column - 2].getContainingValue() != player)) && (column - 2 >= 0) && (row - 2 >= 0))
+                if ((board[row - 2][column - 2].getContainingValue() == ' ' || (board[row - 2][column - 2].getContainingValue() != 'R' && board[row - 2][column - 2].getContainingValue() != player)) && (column - 2 >= 0) && (row - 2 >= 0))
                 {
                     move_choice++;
                     board[row - 2][column - 2].setContainingValue(move_choice);
@@ -294,7 +303,7 @@ void Piece::validateMoves(Position board[8][8])
                     inJump = true;
                 }
             }
-            if(!inJump)
+            if (!inJump)
             {
                 if ((board[row - 1][column + 1].getContainingValue() == ' ') && (column + 1 < 8) && (row - 1 >= 0))
                 {
@@ -309,14 +318,14 @@ void Piece::validateMoves(Position board[8][8])
                     cout << (char)move_choice << ", ";
                 }
             }
-      
+
         }
 
         else // WHITE KING
         {
             if (board[row + 1][column + 1].getContainingValue() == 'R' && (column + 1 < 8) && (row + 1 < 8))
             {
-                if((board[row + 2][column + 2].getContainingValue() == ' ' || (board[row + 2][column + 2].getContainingValue() != 'R' && board[row + 2][column + 2].getContainingValue() != player)) && (column + 2 < 8) && (row + 2 < 8))
+                if ((board[row + 2][column + 2].getContainingValue() == ' ' || (board[row + 2][column + 2].getContainingValue() != 'R' && board[row + 2][column + 2].getContainingValue() != player)) && (column + 2 < 8) && (row + 2 < 8))
                 {
                     move_choice++;
                     board[row + 2][column + 2].setContainingValue(move_choice);
@@ -324,10 +333,10 @@ void Piece::validateMoves(Position board[8][8])
                     inJump = true;
                 }
             }
-            if((board[row + 1][column].getContainingValue() == 'R') && (row + 1 < 8))
+            if ((board[row + 1][column].getContainingValue() == 'R') && (row + 1 < 8))
             {
-                if((board[row + 2][column].getContainingValue() == ' ' || (board[row + 2][column].getContainingValue() != 'R' && board[row + 2][column].getContainingValue() != player)) && (row + 2 < 8))
-                {   
+                if ((board[row + 2][column].getContainingValue() == ' ' || (board[row + 2][column].getContainingValue() != 'R' && board[row + 2][column].getContainingValue() != player)) && (row + 2 < 8))
+                {
                     move_choice++;
                     board[row + 2][column].setContainingValue(move_choice);
                     cout << (char)move_choice << ", ";
@@ -338,7 +347,7 @@ void Piece::validateMoves(Position board[8][8])
 
             if ((board[row + 1][column - 1].getContainingValue() == 'R') && (column - 1 >= 0) && (row + 1 < 8))
             {
-                if((board[row + 2][column - 2].getContainingValue() == ' ' || (board[row + 2][column - 2].getContainingValue() != 'R' && board[row + 2][column - 2].getContainingValue() != player)) && (column - 2 >= 0) && (row + 2 < 8))
+                if ((board[row + 2][column - 2].getContainingValue() == ' ' || (board[row + 2][column - 2].getContainingValue() != 'R' && board[row + 2][column - 2].getContainingValue() != player)) && (column - 2 >= 0) && (row + 2 < 8))
                 {
                     move_choice++;
                     board[row + 2][column - 2].setContainingValue(move_choice);
@@ -348,7 +357,7 @@ void Piece::validateMoves(Position board[8][8])
             }
             if (board[row - 1][column + 1].getContainingValue() == 'R' && (column + 1 < 8) && (row - 1 >= 0))
             {
-                if((board[row - 2][column + 2].getContainingValue() == ' ' || (board[row - 2][column + 2].getContainingValue() != 'R' && board[row - 2][column + 2].getContainingValue() != player)) && (column + 2 < 8) && (row - 2 >= 0))
+                if ((board[row - 2][column + 2].getContainingValue() == ' ' || (board[row - 2][column + 2].getContainingValue() != 'R' && board[row - 2][column + 2].getContainingValue() != player)) && (column + 2 < 8) && (row - 2 >= 0))
                 {
                     move_choice++;
                     board[row - 2][column + 2].setContainingValue(move_choice);
@@ -356,9 +365,9 @@ void Piece::validateMoves(Position board[8][8])
                     inJump = true;
                 }
             }
-            if((board[row - 1][column].getContainingValue() == 'R') && (row - 1 >= 0))
+            if ((board[row - 1][column].getContainingValue() == 'R') && (row - 1 >= 0))
             {
-                if((board[row - 2][column].getContainingValue() == ' ' || (board[row - 2][column].getContainingValue() != 'R' && board[row - 2][column].getContainingValue() != player)) && (row - 2 >= 0))
+                if ((board[row - 2][column].getContainingValue() == ' ' || (board[row - 2][column].getContainingValue() != 'R' && board[row - 2][column].getContainingValue() != player)) && (row - 2 >= 0))
                 {
                     move_choice++;
                     board[row - 2][column].setContainingValue(move_choice);
@@ -370,7 +379,7 @@ void Piece::validateMoves(Position board[8][8])
 
             if ((board[row - 1][column - 1].getContainingValue() == 'R') && (column - 1 >= 0) && (row - 1 >= 0))
             {
-                if((board[row - 2][column - 2].getContainingValue() == ' ' || (board[row - 2][column - 2].getContainingValue() != 'R' && board[row - 2][column - 2].getContainingValue() != player)) && (column - 2 >= 0) && (row - 2 >= 0))
+                if ((board[row - 2][column - 2].getContainingValue() == ' ' || (board[row - 2][column - 2].getContainingValue() != 'R' && board[row - 2][column - 2].getContainingValue() != player)) && (column - 2 >= 0) && (row - 2 >= 0))
                 {
                     move_choice++;
                     board[row - 2][column - 2].setContainingValue(move_choice);
@@ -380,7 +389,7 @@ void Piece::validateMoves(Position board[8][8])
             }
 
 
-            if(!inJump)
+            if (!inJump)
             {
                 if (board[row + 1][column - 1].getContainingValue() == ' ' && (column - 1 >= 0) && (row + 1 < 8))
                 {
@@ -388,7 +397,7 @@ void Piece::validateMoves(Position board[8][8])
                     board[row + 1][column - 1].setContainingValue(move_choice);
                     cout << (char)move_choice << ", ";
                 }
-                if(board[row + 1][column].getContainingValue() == ' ' && (row + 1 < 8))
+                if (board[row + 1][column].getContainingValue() == ' ' && (row + 1 < 8))
                 {
                     move_choice++;
                     board[row + 1][column].setContainingValue(move_choice);
@@ -406,7 +415,7 @@ void Piece::validateMoves(Position board[8][8])
                     board[row - 1][column + 1].setContainingValue(move_choice);
                     cout << (char)move_choice << ", ";
                 }
-                if(board[row - 1][column].getContainingValue() == ' ' && (row - 1 >= 0))
+                if (board[row - 1][column].getContainingValue() == ' ' && (row - 1 >= 0))
                 {
                     move_choice++;
                     board[row - 1][column].setContainingValue(move_choice);
@@ -419,10 +428,10 @@ void Piece::validateMoves(Position board[8][8])
                     cout << (char)move_choice << ", ";
                 }
             }
-        
+
         }
     }
-            
+
 }
 
 
@@ -436,31 +445,109 @@ void board_init(Position board[8][8]);
 void player_init(Piece[], Position board[8][8], char);
 void renderBoard(Position board[8][8]);
 void theGame();
-void makeMove(Piece *&, Piece *&, Position board[8][8], char);
-void multipleJump(Piece *&, Piece *&, Position board[8][8], char, int);
-int indexFinder(Piece *&, char, int, int);
-void positionUpdater(Piece *&, Position board[8][8], char, int, int, int, int, int);
-void makeJump(Piece *&, Piece *&, Position board[8][8], char, int, int, int, int, int);
+void makeMove(Piece*&, Piece*&, Position board[8][8], char);
+void multipleJump(Piece*&, Piece*&, Position board[8][8], char, int);
+int indexFinder(Piece*&, char, int, int);
+void positionUpdater(Piece*&, Position board[8][8], char, int, int, int, int, int);
+void makeJump(Piece*&, Piece*&, Position board[8][8], char, int, int, int, int, int);
 void afterMoveCleaner(Position board[8][8]);
-void modifyPieces(Piece *&, int, char);
-
+void modifyPieces(Piece*&, int, char);
+char winner;
 int main()
 {
+    string p1, p2;
+    int choice;
+    char toss;
+    char toss_winner;
+    bool games = true;
+    char x;
+    int score_p1 = 0;
+    int score_p2 = 0;
 
-    theGame();
+    cout << "\nEnter name of player 1: ";
+    getline(cin, p1);
+    cout << "\nEnter name of player 2: ";
+    getline(cin, p2);
+   
+    
 
+    cout << endl << "----------COIN TOSS--------";
+    cout << endl << endl << p1 << " press h/H for heads and t/T fot tails: ";
+    cin >> toss;
+    while (toss != 'h' && toss != 'H' && toss != 't' && toss != 'T')
+    {
+        cout << endl << " press h/H for heads and t/T fot tails:  ";
+        cin >> toss;
+    }
+    srand(time(NULL));
+    choice = rand() ;
+    if ((choice %2 == 1 && toss == 'h') || choice%2 == 1 && toss == 'H')
+    {
+        cout << endl << p1 << " has won the toss and will be red in first game."<<endl;
+        toss_winner = '1';
+    }
+    else
+    {       cout << endl << p2 << " has won the toss and will be red in first game."<<endl;
+    toss_winner = '2';
+}
+    
+    cout << endl << endl << "If you will enter a wrong move your turn will be skipped.";
+    cout << endl << "Making a jump is Compulsory! " << endl << endl;
+        cout << p1 << " " << score_p1 << " : " << score_p2 << " " << p2<<endl;
+        if ( toss_winner == '1')
+            cout << endl << p1 << " is red" << endl << endl;
+       
+        else
+            cout << endl << p2 << " is red" << endl << endl;
+        theGame();
+        if (toss_winner == '1')
+        {
+
+            if (winner == 'D')
+            {
+                score_p1 = score_p1;
+                score_p2 = score_p2;
+            }
+            else if (winner == 'R')
+                score_p1++;
+            else
+                score_p2++;
+        }
+            
+        else
+        {
+            if (winner == 'D')
+            {
+                score_p1 = score_p1;
+                score_p2 = score_p2;
+            }
+            else if ( winner == 'R')
+                score_p2++;
+            else  
+                score_p1++;
+          
+        }
+        cout << p1 << " " << score_p1 << " : " << score_p2 << " " << p2 << endl;
+        
+        
+    if (score_p1 > score_p2)
+        cout << endl << p1 << " wins! ";
+    else if (score_p2 > score_p1)
+        cout << endl << p2 << " wins! ";
+    else
+        cout << endl <<  " Match is drawn";
     return 0;
 }
 
 void afterMoveCleaner(Position board[8][8])
-{   
+{
     char x;
-    for(int row = 0; row < 8; row++)
+    for (int row = 0; row < 8; row++)
     {
-        for(int col = 0; col < 8; col++)
+        for (int col = 0; col < 8; col++)
         {
             x = board[row][col].getContainingValue();
-            if((x != Piece::move_choice) && (x != 'R') && (x != 'W'))
+            if ((x != Piece::move_choice) && (x != 'R') && (x != 'W'))
             {
                 board[row][col].setContainingValue(' ');
             }
@@ -523,45 +610,49 @@ void player_init(Piece pieces[], Position board[8][8], char player)
 
 void theGame()
 {
+   
     Position board[8][8];
     bool gameCompelete = false, isPlayerOne = true, jumpChecked = false;
-    Piece *red_pieces = new Piece[numOfReds];
-    Piece *white_pieces = new Piece[numOfWhites];
+    Piece* red_pieces = new Piece[numOfReds];
+    Piece* white_pieces = new Piece[numOfWhites];
     char choice;
 
     board_init(board);
     player_init(red_pieces, board, 'R');
     player_init(white_pieces, board, 'W');
     renderBoard(board);
+    cout << "\nLoading...\n" << endl;
+    sleep(5);
     while (!gameCompelete)
-    {   
+    {
         if (isPlayerOne) // RED TURN
         {
 
             cout << endl << "RED: " << numOfReds << endl;
-            for(int i = 0; i < numOfReds; i++)
-            {   
+            for (int i = 0; i < numOfReds; i++)
+            {
 
                 red_pieces[i].validateMoves(board);
                 cout << endl << endl;
-                if(Piece::inJump && !jumpChecked)
+                if (Piece::inJump && !jumpChecked)
                 {
                     afterMoveCleaner(board);
                     jumpChecked = true;
-                    
+
                 }
 
             }
 
-            if(numOfReds < 5 && numOfWhites > numOfReds)
+            if (numOfReds < 5 && numOfWhites > numOfReds)
             {
                 cout << "Would you like to resign? Enter y/Y for YES or any character for NO: ";
                 cin >> choice, cout << endl;
 
-                if(choice == 'Y' || choice == 'y')
+                if (choice == 'Y' || choice == 'y')
                 {
                     gameCompelete = true;
                     cout << "PLAYER WHITE WON THE GAME, YOU LOST!\n";
+                    winner = 'W';
                     break;
                 }
                 else
@@ -569,19 +660,20 @@ void theGame()
             }
 
 
-            else if(numOfReds < 5 && numOfReds == numOfWhites)
+            else if (numOfReds < 5 && numOfReds == numOfWhites)
             {
                 cout << "Would you like to agree for a draw? Enter y/Y for YES or any character for NO: ";
                 cin >> choice, cout << endl;
 
-                if(choice == 'Y' || choice == 'y')
+                if (choice == 'Y' || choice == 'y')
                 {
                     cout << "Player RED wants to agree for a draw, would like to agree?: Enter y/Y for YES or any character for NO: ";
                     cin >> choice, cout << endl;
-                    if(choice == 'Y' || choice == 'y')
+                    if (choice == 'Y' || choice == 'y')
                     {
                         gameCompelete = true;
                         cout << "RED AND WHITE HAVE AGREED FOR A DRAW!\n";
+                        winner = 'D';
                         break;
                     }
                     else
@@ -590,9 +682,10 @@ void theGame()
                 else
                     cout << "CONTINUE WITH THE GAME\n";
             }
-            else if(Piece::move_choice == 96 || numOfReds == 0)
+            else if (Piece::move_choice == 96 || numOfReds == 0)
             {
                 cout << "PLAYER WHITE WON THE GAME, YOU LOST!\n";
+                winner = 'W';
                 gameCompelete = true;
                 break;
             }
@@ -609,26 +702,27 @@ void theGame()
         else // WHITE TURN
         {
             cout << endl << "WHITE: " << numOfWhites << endl;
-            for(int i = 0; i < numOfWhites; i++)
+            for (int i = 0; i < numOfWhites; i++)
             {
                 white_pieces[i].validateMoves(board);
                 cout << endl << endl;
-                if(Piece::inJump && !jumpChecked)
+                if (Piece::inJump && !jumpChecked)
                 {
                     afterMoveCleaner(board);
                     jumpChecked = true;
                 }
             }
 
-            if(numOfWhites < 5 && numOfReds > numOfWhites)
+            if (numOfWhites < 5 && numOfReds > numOfWhites)
             {
                 cout << "Would you like to resign? Enter y/Y for YES or any character for NO: ";
                 cin >> choice, cout << endl;
 
-                if(choice == 'Y' || choice == 'y')
+                if (choice == 'Y' || choice == 'y')
                 {
                     gameCompelete = true;
                     cout << "PLAYER RED WON THE GAME, YOU LOST!\n";
+                    winner = 'R';
                     break;
                 }
                 else
@@ -636,19 +730,20 @@ void theGame()
             }
 
 
-            else if(numOfWhites < 5 && numOfReds == numOfWhites)
+            else if (numOfWhites < 5 && numOfReds == numOfWhites)
             {
                 cout << "Would you like to agree for a draw? Enter y/Y for YES or any character for NO: ";
                 cin >> choice, cout << endl;
 
-                if(choice == 'Y' || choice == 'y')
+                if (choice == 'Y' || choice == 'y')
                 {
                     cout << "Player WHITE wants to agree for a draw, would like to agree?: Enter y/Y for YES or any character for NO: ";
                     cin >> choice, cout << endl;
-                    if(choice == 'Y' || choice == 'y')
+                    if (choice == 'Y' || choice == 'y')
                     {
                         gameCompelete = true;
                         cout << "RED AND WHITE HAVE AGREED FOR A DRAW!\n";
+                        winner = 'D';
                         break;
                     }
                     else
@@ -657,12 +752,13 @@ void theGame()
                 else
                     cout << "CONTINUE WITH THE GAME\n";
             }
-            else if(Piece::move_choice == 96 || numOfWhites == 0)
+            else if (Piece::move_choice == 96 || numOfWhites == 0)
             {
                 cout << "PLAYER RED WON THE GAME, YOU LOST!\n";
+                winner = 'R';
                 gameCompelete = true;
                 break;
-            } 
+            }
 
             Piece::move_choice = 96;
             renderBoard(board);
@@ -672,16 +768,24 @@ void theGame()
             jumpChecked = false;
         }
     }
+   
 }
 
 void renderBoard(Position board[8][8])
 {
+    for (int i = 0;i < 8;i++)
+    {
+        cout << "   " << i ;
+    }
+    cout << endl;
     for (int i = 0; i < 11; i++)
         cout << "---";
 
     cout << endl;
+   
     for (int row = 0; row < 8; row++)
     {
+        cout << row;
         for (int col = 0; col < 8; col++)
         {
             if (col == 0)
@@ -701,38 +805,38 @@ void renderBoard(Position board[8][8])
     }
 }
 
-void makeMove(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], char player)
+void makeMove(Piece*& red_pieces, Piece*& white_pieces, Position board[8][8], char player)
 {
     int row_choice, col_choice, index;
     char move_choice;
     bool correctPiece = false;
 
-    while(!correctPiece)
+    while (!correctPiece)
     {
         cout << "Please kindly enter the row of the piece you want to move: ", cin >> row_choice, cout << endl;
         cout << "Please kindly enter the column of the piece you want to move: ", cin >> col_choice, cout << endl;
-        if(board[row_choice][col_choice].getContainingValue() == player)
+        if (board[row_choice][col_choice].getContainingValue() == player)
             correctPiece = true;
         else
             cout << "Your piece does not exist at this position, try again!\n";
     }
     cout << "Please kindly enter move you want to make: ", cin >> move_choice, cout << endl;
 
-    for(int row = 0; row < 8; row++)
+    for (int row = 0; row < 8; row++)
     {
-        for(int col = 0; col < 8; col++)
+        for (int col = 0; col < 8; col++)
         {
-            if(board[row][col].getContainingValue() == move_choice)
+            if (board[row][col].getContainingValue() == move_choice)
             {
-                if(!Piece::inJump)
+                if (!Piece::inJump)
                 {
-                    if(player == 'R')
+                    if (player == 'R')
                     {
                         index = indexFinder(red_pieces, player, row_choice, col_choice);
                         positionUpdater(red_pieces, board, player, index, row_choice, col_choice, row, col);
                     }
                     else
-                    {   
+                    {
                         index = indexFinder(white_pieces, player, row_choice, col_choice);
                         positionUpdater(white_pieces, board, player, index, row_choice, col_choice, row, col);
                     }
@@ -740,17 +844,17 @@ void makeMove(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                 }
                 else
                 {
-                    if(player == 'R')
+                    if (player == 'R')
                         index = indexFinder(red_pieces, player, row_choice, col_choice);
                     else
                         index = indexFinder(white_pieces, player, row_choice, col_choice);
-                    
+
                     makeJump(red_pieces, white_pieces, board, player, index, row_choice, col_choice, row, col);
                     continue;
                 }
-                
+
             }
-            else if(row == 7 && col == 7)
+            else if (row == 7 && col == 7)
             {
                 Piece::inJump = false;
                 board[row][col].afterMoveCleaner();
@@ -759,43 +863,43 @@ void makeMove(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
             {
                 board[row][col].afterMoveCleaner();
             }
-            
+
         }
     }
-    
+
 }
 
-int indexFinder(Piece *&pieces, char player,int row, int col)
+int indexFinder(Piece*& pieces, char player, int row, int col)
 {
     int size;
-    if(player == 'R')
+    if (player == 'R')
         size = numOfReds;
     else
         size = numOfWhites;
 
-    for(int i = 0; i < size; i++)
+    for (int i = 0; i < size; i++)
     {
-        if(pieces[i].getrow() == row && pieces[i].getcolumn() == col)
+        if (pieces[i].getrow() == row && pieces[i].getcolumn() == col)
             return i;
     }
-    
+
 }
 
-void positionUpdater(Piece *&pieces, Position board[8][8], char player, int index, int old_row, int old_col, int new_row, int new_col)
+void positionUpdater(Piece*& pieces, Position board[8][8], char player, int index, int old_row, int old_col, int new_row, int new_col)
 {
-    if(!pieces[index].getIsKing())
+    if (!pieces[index].getIsKing())
     {
-        if(player == 'R') // RED PLAYER
+        if (player == 'R') // RED PLAYER
         {
-            if(old_row + 1 == new_row)
+            if (old_row + 1 == new_row)
             {
-                if(old_col + 1 == new_col)
+                if (old_col + 1 == new_col)
                 {
                     pieces[index].makeMove(new_row, new_col);
                     board[old_row][old_col].setContainingValue(' ');
                     board[new_row][new_col].setContainingValue(player);
                 }
-                else if(old_col - 1 == new_col)
+                else if (old_col - 1 == new_col)
                 {
                     pieces[index].makeMove(new_row, new_col);
                     board[old_row][old_col].setContainingValue(' ');
@@ -815,15 +919,15 @@ void positionUpdater(Piece *&pieces, Position board[8][8], char player, int inde
         }
         else // WHITE PLAYER
         {
-            if(old_row - 1 == new_row)
+            if (old_row - 1 == new_row)
             {
-                if(old_col + 1 == new_col)
+                if (old_col + 1 == new_col)
                 {
                     pieces[index].makeMove(new_row, new_col);
                     board[old_row][old_col].setContainingValue(' ');
                     board[new_row][new_col].setContainingValue(player);
                 }
-                else if(old_col - 1 == new_col)
+                else if (old_col - 1 == new_col)
                 {
                     pieces[index].makeMove(new_row, new_col);
                     board[old_row][old_col].setContainingValue(' ');
@@ -841,26 +945,26 @@ void positionUpdater(Piece *&pieces, Position board[8][8], char player, int inde
                 cout << "Invalid Move!\n";
             }
         }
-        
+
     }
 
     else
     {
-        if(old_row + 1 == new_row)
+        if (old_row + 1 == new_row)
         {
-            if(old_col + 1 == new_col)
+            if (old_col + 1 == new_col)
             {
                 pieces[index].makeMove(new_row, new_col);
                 board[old_row][old_col].setContainingValue(' ');
                 board[new_row][new_col].setContainingValue(player);
             }
-            else if(old_col - 1 == new_col)
+            else if (old_col - 1 == new_col)
             {
                 pieces[index].makeMove(new_row, new_col);
                 board[old_row][old_col].setContainingValue(' ');
                 board[new_row][new_col].setContainingValue(player);
             }
-            else if(old_col == new_col)
+            else if (old_col == new_col)
             {
                 pieces[index].makeMove(new_row, new_col);
                 board[old_row][old_col].setContainingValue(' ');
@@ -872,21 +976,21 @@ void positionUpdater(Piece *&pieces, Position board[8][8], char player, int inde
                 cout << "Invalid Move!\n";
             }
         }
-        else if(old_row - 1 == new_row)
+        else if (old_row - 1 == new_row)
         {
-            if(old_col + 1 == new_col)
+            if (old_col + 1 == new_col)
             {
                 pieces[index].makeMove(new_row, new_col);
                 board[old_row][old_col].setContainingValue(' ');
                 board[new_row][new_col].setContainingValue(player);
             }
-            else if(old_col - 1 == new_col)
+            else if (old_col - 1 == new_col)
             {
                 pieces[index].makeMove(new_row, new_col);
                 board[old_row][old_col].setContainingValue(' ');
                 board[new_row][new_col].setContainingValue(player);
             }
-            else if(old_col == new_col)
+            else if (old_col == new_col)
             {
                 pieces[index].makeMove(new_row, new_col);
                 board[old_row][old_col].setContainingValue(' ');
@@ -906,16 +1010,16 @@ void positionUpdater(Piece *&pieces, Position board[8][8], char player, int inde
     }
 }
 
-void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], char player, int this_index, int old_row, int old_col, int new_row, int new_col)
-{   
+void makeJump(Piece*& red_pieces, Piece*& white_pieces, Position board[8][8], char player, int this_index, int old_row, int old_col, int new_row, int new_col)
+{
     int other_index;
-    if(player == 'R') // RED PLAYER
+    if (player == 'R') // RED PLAYER
     {
-        if(!red_pieces[this_index].getIsKing())
+        if (!red_pieces[this_index].getIsKing())
         {
-            if(old_row + 2 == new_row)
+            if (old_row + 2 == new_row)
             {
-                if(old_col + 2 == new_col && board[old_row + 1][old_col + 1].getContainingValue() == 'W')
+                if (old_col + 2 == new_col && board[old_row + 1][old_col + 1].getContainingValue() == 'W')
                 {
                     red_pieces[this_index].makeMove(new_row, new_col);
                     other_index = indexFinder(white_pieces, 'W', old_row + 1, old_col + 1);
@@ -925,7 +1029,7 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                     board[new_row][new_col].setContainingValue(player);
                     multipleJump(red_pieces, white_pieces, board, player, this_index);
                 }
-                else if(old_col - 2 == new_col && board[old_row + 1][old_col - 1].getContainingValue() == 'W')
+                else if (old_col - 2 == new_col && board[old_row + 1][old_col - 1].getContainingValue() == 'W')
                 {
                     red_pieces[this_index].makeMove(new_row, new_col);
                     other_index = indexFinder(white_pieces, 'W', old_row + 1, old_col - 1);
@@ -951,9 +1055,9 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
         }
         else // RED KING
         {
-            if(old_row + 2 == new_row)
+            if (old_row + 2 == new_row)
             {
-                if(old_col + 2 == new_col && board[old_row + 1][old_col + 1].getContainingValue() == 'W')
+                if (old_col + 2 == new_col && board[old_row + 1][old_col + 1].getContainingValue() == 'W')
                 {
                     red_pieces[this_index].makeMove(new_row, new_col);
                     other_index = indexFinder(white_pieces, 'W', old_row + 1, old_col + 1);
@@ -963,7 +1067,7 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                     board[new_row][new_col].setContainingValue(player);
                     multipleJump(red_pieces, white_pieces, board, player, this_index);
                 }
-                else if(old_col - 2 == new_col && board[old_row + 1][old_col - 1].getContainingValue() == 'W')
+                else if (old_col - 2 == new_col && board[old_row + 1][old_col - 1].getContainingValue() == 'W')
                 {
                     red_pieces[this_index].makeMove(new_row, new_col);
                     other_index = indexFinder(white_pieces, 'W', old_row + 1, old_col - 1);
@@ -973,7 +1077,7 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                     board[new_row][new_col].setContainingValue(player);
                     multipleJump(red_pieces, white_pieces, board, player, this_index);
                 }
-                else if(old_col == new_col && board[old_row + 1][old_col].getContainingValue() == 'W')
+                else if (old_col == new_col && board[old_row + 1][old_col].getContainingValue() == 'W')
                 {
                     red_pieces[this_index].makeMove(new_row, new_col);
                     other_index = indexFinder(white_pieces, 'W', old_row + 1, old_col);
@@ -990,11 +1094,11 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                     board[new_row][new_col].setContainingValue(' ');
                     cout << "Invalid Move! You Must Jump!\n";
                 }
-            } 
+            }
 
-            else if(old_row - 2 == new_row)
+            else if (old_row - 2 == new_row)
             {
-                if(old_col + 2 == new_col && board[old_row - 1][old_col + 1].getContainingValue() == 'W')
+                if (old_col + 2 == new_col && board[old_row - 1][old_col + 1].getContainingValue() == 'W')
                 {
                     red_pieces[this_index].makeMove(new_row, new_col);
                     other_index = indexFinder(white_pieces, 'W', old_row - 1, old_col + 1);
@@ -1004,7 +1108,7 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                     board[new_row][new_col].setContainingValue(player);
                     multipleJump(red_pieces, white_pieces, board, player, this_index);
                 }
-                else if(old_col - 2 == new_col && board[old_row - 1][old_col - 1].getContainingValue() == 'W')
+                else if (old_col - 2 == new_col && board[old_row - 1][old_col - 1].getContainingValue() == 'W')
                 {
                     red_pieces[this_index].makeMove(new_row, new_col);
                     other_index = indexFinder(white_pieces, 'W', old_row - 1, old_col - 1);
@@ -1014,7 +1118,7 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                     board[new_row][new_col].setContainingValue(player);
                     multipleJump(red_pieces, white_pieces, board, player, this_index);
                 }
-                else if(old_col == new_col && board[old_row - 1][old_col].getContainingValue() == 'W')
+                else if (old_col == new_col && board[old_row - 1][old_col].getContainingValue() == 'W')
                 {
                     red_pieces[this_index].makeMove(new_row, new_col);
                     other_index = indexFinder(white_pieces, 'W', old_row - 1, old_col);
@@ -1040,16 +1144,16 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                 cout << "Invalid Move! You Must Jump!\n";
             }
         }
-        
+
     }
 
     else // WHITE PLAYER
     {
-        if(!white_pieces[this_index].getIsKing())
+        if (!white_pieces[this_index].getIsKing())
         {
-            if(old_row - 2 == new_row)
+            if (old_row - 2 == new_row)
             {
-                if(old_col + 2 == new_col && board[old_row - 1][old_col + 1].getContainingValue() == 'R')
+                if (old_col + 2 == new_col && board[old_row - 1][old_col + 1].getContainingValue() == 'R')
                 {
                     white_pieces[this_index].makeMove(new_row, new_col);
                     other_index = indexFinder(red_pieces, 'R', old_row - 1, old_col + 1);
@@ -1059,7 +1163,7 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                     board[new_row][new_col].setContainingValue(player);
                     multipleJump(red_pieces, white_pieces, board, player, this_index);
                 }
-                else if(old_col - 2 == new_col && board[old_row - 1][old_col - 1].getContainingValue() == 'R')
+                else if (old_col - 2 == new_col && board[old_row - 1][old_col - 1].getContainingValue() == 'R')
                 {
                     white_pieces[this_index].makeMove(new_row, new_col);
                     other_index = indexFinder(red_pieces, 'R', old_row - 1, old_col - 1);
@@ -1085,9 +1189,9 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
         }
         else // WHITE KING
         {
-            if(old_row + 2 == new_row)
+            if (old_row + 2 == new_row)
             {
-                if(old_col + 2 == new_col && board[old_row + 1][old_col + 1].getContainingValue() == 'R')
+                if (old_col + 2 == new_col && board[old_row + 1][old_col + 1].getContainingValue() == 'R')
                 {
                     white_pieces[this_index].makeMove(new_row, new_col);
                     other_index = indexFinder(red_pieces, 'R', old_row + 1, old_col + 1);
@@ -1097,7 +1201,7 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                     board[new_row][new_col].setContainingValue(player);
                     multipleJump(red_pieces, white_pieces, board, player, this_index);
                 }
-                else if(old_col - 2 == new_col && board[old_row + 1][old_col - 1].getContainingValue() == 'R')
+                else if (old_col - 2 == new_col && board[old_row + 1][old_col - 1].getContainingValue() == 'R')
                 {
                     white_pieces[this_index].makeMove(new_row, new_col);
                     other_index = indexFinder(red_pieces, 'R', old_row + 1, old_col - 1);
@@ -1107,7 +1211,7 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                     board[new_row][new_col].setContainingValue(player);
                     multipleJump(red_pieces, white_pieces, board, player, this_index);
                 }
-                else if(old_col == new_col && board[old_row + 1][old_col].getContainingValue() == 'R')
+                else if (old_col == new_col && board[old_row + 1][old_col].getContainingValue() == 'R')
                 {
                     white_pieces[this_index].makeMove(new_row, new_col);
                     other_index = indexFinder(red_pieces, 'R', old_row + 1, old_col);
@@ -1124,11 +1228,11 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                     board[new_row][new_col].setContainingValue(' ');
                     cout << "Invalid Move! You Must Jump!\n";
                 }
-            } 
+            }
 
-            else if(old_row - 2 == new_row)
+            else if (old_row - 2 == new_row)
             {
-                if(old_col + 2 == new_col && board[old_row - 1][old_col + 1].getContainingValue() == 'R')
+                if (old_col + 2 == new_col && board[old_row - 1][old_col + 1].getContainingValue() == 'R')
                 {
                     white_pieces[this_index].makeMove(new_row, new_col);
                     other_index = indexFinder(red_pieces, 'R', old_row - 1, old_col + 1);
@@ -1138,7 +1242,7 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                     board[new_row][new_col].setContainingValue(player);
                     multipleJump(red_pieces, white_pieces, board, player, this_index);
                 }
-                else if(old_col - 2 == new_col && board[old_row - 1][old_col - 1].getContainingValue() == 'R')
+                else if (old_col - 2 == new_col && board[old_row - 1][old_col - 1].getContainingValue() == 'R')
                 {
                     white_pieces[this_index].makeMove(new_row, new_col);
                     other_index = indexFinder(red_pieces, 'R', old_row - 1, old_col - 1);
@@ -1148,7 +1252,7 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                     board[new_row][new_col].setContainingValue(player);
                     multipleJump(red_pieces, white_pieces, board, player, this_index);
                 }
-                else if(old_col == new_col && board[old_row - 1][old_col].getContainingValue() == 'R')
+                else if (old_col == new_col && board[old_row - 1][old_col].getContainingValue() == 'R')
                 {
                     white_pieces[this_index].makeMove(new_row, new_col);
                     other_index = indexFinder(red_pieces, 'R', old_row - 1, old_col);
@@ -1174,20 +1278,21 @@ void makeJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], ch
                 cout << "Invalid Move! You Must Jump!\n";
             }
         }
-        
+
     }
-    
+
 }
 
-void multipleJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8], char player, int index)
+void multipleJump(Piece*& red_pieces, Piece*& white_pieces, Position board[8][8], char player, int index)
 {
     Piece::inJump = false;
-    if(player == 'R')
+    if (player == 'R')
     {
         Piece::move_choice = 96;
         red_pieces[index].validateMoves(board);
         cout << endl;
-        if(Piece::inJump)
+
+        if (Piece::inJump)
         {
             renderBoard(board);
             cout << endl << "RED: " << numOfReds << endl << endl;
@@ -1195,15 +1300,15 @@ void multipleJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8]
         }
         else
         {
-            for(int row = 0; row < 8; row++)
+            for (int row = 0; row < 8; row++)
             {
-                for(int col = 0; col < 8; col++)
+                for (int col = 0; col < 8; col++)
                 {
                     board[row][col].afterMoveCleaner();
                 }
             }
         }
-        
+
     }
 
     else
@@ -1211,7 +1316,7 @@ void multipleJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8]
         Piece::move_choice = 96;
         white_pieces[index].validateMoves(board);
         cout << endl;
-        if(Piece::inJump)
+        if (Piece::inJump)
         {
             renderBoard(board);
             cout << endl << "WHITE: " << numOfWhites << endl << endl;
@@ -1219,31 +1324,31 @@ void multipleJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8]
         }
         else
         {
-            for(int row = 0; row < 8; row++)
+            for (int row = 0; row < 8; row++)
             {
-                for(int col = 0; col < 8; col++)
+                for (int col = 0; col < 8; col++)
                 {
                     board[row][col].afterMoveCleaner();
                 }
             }
         }
     }
-    
+
 }
 
-void modifyPieces(Piece *&pieces, int ignorePiece, char player)
+void modifyPieces(Piece*& pieces, int ignorePiece, char player)
 {
     int numOfPieces;
-    if(player == 'R')
+    if (player == 'R')
         numOfPieces = --numOfReds;
     else
         numOfPieces = --numOfWhites;
 
-    Piece *temp = new Piece[numOfPieces]; 
-    
-    for(int i = 0, j = 0; j < numOfPieces + 1; i++, j++)
+    Piece* temp = new Piece[numOfPieces];
+
+    for (int i = 0, j = 0; j < numOfPieces + 1; i++, j++)
     {
-        if(j == ignorePiece)
+        if (j == ignorePiece)
         {
             i--;
             continue;
@@ -1253,10 +1358,9 @@ void modifyPieces(Piece *&pieces, int ignorePiece, char player)
             temp[i] = pieces[j];
         }
     }
-    
+
     pieces = NULL;
     delete[] pieces;
     pieces = temp;
-    // Piece::inJump = false;
 
 }
