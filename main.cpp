@@ -82,7 +82,7 @@ public:
 
     void setContainingValue(char x)
     {
-       this-> containingValue = x ;
+       this -> containingValue = x;
     }
 
     char getContainingValue()
@@ -446,6 +446,7 @@ void modifyPieces(Piece *&, int, char);
 
 int main()
 {
+
     theGame();
 
     return 0;
@@ -1185,6 +1186,7 @@ void multipleJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8]
     {
         Piece::move_choice = 96;
         red_pieces[index].validateMoves(board);
+        cout << endl;
         if(Piece::inJump)
         {
             renderBoard(board);
@@ -1208,6 +1210,7 @@ void multipleJump(Piece *&red_pieces, Piece *&white_pieces, Position board[8][8]
     {
         Piece::move_choice = 96;
         white_pieces[index].validateMoves(board);
+        cout << endl;
         if(Piece::inJump)
         {
             renderBoard(board);
